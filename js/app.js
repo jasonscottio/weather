@@ -2,6 +2,18 @@ var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
 var $locationName = $("#locationName");
+var $panelBody = $(".panel-body");
+
+var $weather = $("#weather");
+var $weatherDescription = $("#weatherDescription");
+var $temp = $("#temp");
+var $tempMin = $("#tempMin");
+var $tempMax = $("#tempMax");
+var $windSpeed = $("#windSpeed");
+var $windDeg = $("#windDeg");
+
+
+
 //pulls GPS weather at page load
 getLocation();
 
@@ -35,16 +47,6 @@ function getGeoWeather(callback, lat, lon) {
     });
 }
 
-//gets weather based on geo data for 5 days
-function getGeo5day(callback, lat, lon) {
-    var weatherURL = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
-    $.ajax({
-        dataType: "jsonp",
-        url: weatherURL,
-        success: callback
-    });
-}
-
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
@@ -68,23 +70,17 @@ $goButton.click(function (e) {
 
 
 function printPanel(data) {
-    var lb = "<br>";
-    var name = data.name;
-    var country = data.sys.country;
-    var weather = data.weather[0].main;
-    var weatherDescription = data.weather[0].description;
-    var temp = data.main.temp;
-    var tempMin = data.main.temp_min;
-    var tempMax = data.main.temp_max;
-    var windSpeed = data.wind.speed;
-    var windDeg = data.wind.deg;
-    $locationName.text(
-        name + ", " + country);
-    $tab2.html(
-        "<h1 class='locationName'>" + name + ", " + country + "</h1>" + lb +
-        weather + lb +
-        weatherDescription + lb +
-        temp + " " + tempMin + " " + tempMax + lb);
+    // var windSpeed = data.wind.speed;
+    // var windDeg = data.wind.deg;
+    $locationName.text(data.name + ", " + data.sys.country);
+    $weather.text(data.weather[0].main);
+    $weatherDescription.text(data.weather[0].description);
+    $temp.text(data.main.temp); 
+    $tempMin.text(data.main.temp_min);
+    $tempMax.text(data.main.temp_max);
+    $windSpeed.text(data.wind.speed);
+    $windDeg.text(data.wind.deg); 
+    
 }
 
 
