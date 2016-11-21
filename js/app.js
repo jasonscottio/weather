@@ -11,6 +11,7 @@ var $tempMin = $("#tempMin");
 var $tempMax = $("#tempMax");
 var $windSpeed = $("#windSpeed");
 var $windDeg = $("#windDeg");
+var $weatherImg = $("#weatherImg");
 
 
 
@@ -79,8 +80,8 @@ function printPanel(data) {
     $tempMin.text(data.main.temp_min);
     $tempMax.text(data.main.temp_max);
     $windSpeed.text(data.wind.speed);
-    $windDeg.text(data.wind.deg); 
-    
+    $windDeg.text(data.wind.deg);
+    $weatherImg.attr('src', "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
 }
 
 
