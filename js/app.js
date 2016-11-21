@@ -2,25 +2,32 @@ var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
 
+//pulls GPS weather at page load
 getLocation();
 
+
+//pulls GPS data from browser
 function getLocation() {
+    //checks to see if there is valid geo data
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
+            // sends position to callback to find weather
             getGeoWeather(function (data) {
-                console.log(data);
                 printData(data);
             }, position.coords.latitude, position.coords.longitude);
         });
     } else {
+        //handle no geo data
         alert("NO GEO!");
     }
 }
 
 
-
+//gets weather based on geo data
 function getGeoWeather(callback, lat, lon) {
+    //sets search URL with geo data
     var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
+    //sends request
     $.ajax({
         dataType: "jsonp",
         url: weatherURL,
@@ -28,9 +35,11 @@ function getGeoWeather(callback, lat, lon) {
     });
 }
 
-function getWeather(callback, query) {
-    console.log("Getting here!");
+//gets weather based on search
+function getSearchWeather(callback, query) {
+    //sets search URL with query
     var weather = 'http://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
+    //sends request
     $.ajax({
         dataType: "jsonp",
         url: weather,
@@ -38,9 +47,11 @@ function getWeather(callback, query) {
     });
 }
 
+
+//handles search request from search button
 $goButton.click(function (e) {
     e.preventDefault();
-    getWeather(function (data) {
+    getSearchWeather(function (data) {
         console.log(data);
         printData(data.list[0]);
     }, $searchInput.val());
