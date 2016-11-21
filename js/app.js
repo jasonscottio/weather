@@ -39,7 +39,7 @@ function getLocation() {
 //gets weather based on geo data
 function getGeoWeather(callback, lat, lon) {
     //sets search URL with geo data
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
     //sends request
     $.ajax({
         dataType: "jsonp",
@@ -51,7 +51,7 @@ function getGeoWeather(callback, lat, lon) {
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
-    var weather = 'https://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
+    var weather = 'http://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
     //sends request
     $.ajax({
         dataType: "jsonp",
@@ -81,7 +81,7 @@ function printPanel(data) {
     $tempMax.text(data.main.temp_max);
     $windSpeed.text(data.wind.speed);
     $windDeg.text(data.wind.deg);
-    $weatherImg.attr('src', "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
+    $weatherImg.attr('src', "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
 }
 
 
