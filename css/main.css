@@ -12,6 +12,15 @@ button {
     font-size: 40px;
 }
 
+.panel a {
+    color: white;
+}
+
+.panel li a:hover {
+    color: #333;
+    background: #eee6ea;
+}
+
 @media (min-width: 768px){
     .navbar-right{
         width: 60%;

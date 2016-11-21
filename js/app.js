@@ -14,6 +14,7 @@ function getLocation() {
             // sends position to callback to find weather
             getGeoWeather(function (data) {
                 printData(data);
+                printPanel(data);
             }, position.coords.latitude, position.coords.longitude);
         });
     } else {
@@ -80,6 +81,11 @@ function printData(data) {
 }
 
 
+function printPanel(data){
+    $("#tab1primary").html("getting here");
+}
+
+printPanel();
 
 
 
