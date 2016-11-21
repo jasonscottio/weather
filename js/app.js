@@ -2,44 +2,70 @@ var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
 
+getLocation();
+
+function getLocation() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            getGeoWeather(function (data) {
+                console.log(data);
+                printData(data);
+            }, position.coords.latitude, position.coords.longitude);
+        });
+    } else {
+        alert("NO GEO!");
+    }
+}
+
+
+
+function getGeoWeather(callback, lat, lon) {
+    var weatherURL = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
+    $.ajax({
+        dataType: "jsonp",
+        url: weatherURL,
+        success: callback
+    });
+}
 
 function getWeather(callback, query) {
     console.log("Getting here!");
     var weather = 'http://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
     $.ajax({
-      dataType: "jsonp",
-      url: weather,
-      success: callback
+        dataType: "jsonp",
+        url: weather,
+        success: callback
     });
 }
 
-$goButton.click(function(e){    
+$goButton.click(function (e) {
     e.preventDefault();
     getWeather(function (data) {
-    console.log(data);
-    printData(data.list[0]);
-}, $searchInput.val());});
+        console.log(data);
+        printData(data.list[0]);
+    }, $searchInput.val());
+});
 
 
-function printData(data){
+function printData(data) {
     console.log(data);
     // $.each(data, function(){
-        var lb = "<br>";
-        var name = data.name;
-        var country = data.sys.country;
-        var weather = data.weather[0].main;
-        var weatherDescription = data.weather[0].description;
-        var temp = data.main.temp;
-        var tempMin = data.main.temp_min;
-        var tempMax = data.main.temp_max;
-        var windSpeed = data.wind.speed;
-        var windDeg = data.wind.deg;
+    var lb = "<br>";
+    var name = data.name;
+    var country = data.sys.country;
+    var weather = data.weather[0].main;
+    var weatherDescription = data.weather[0].description;
+    var temp = data.main.temp;
+    var tempMin = data.main.temp_min;
+    var tempMax = data.main.temp_max;
+    var windSpeed = data.wind.speed;
+    var windDeg = data.wind.deg;
 
-        $results.html(
-            name + ", " + country + lb +
-            weather + lb +
-            weatherDescription + lb +
-            temp + " " + tempMin + " " + tempMax + lb);
+    $results.html(
+        name + ", " + country + lb +
+        weather + lb +
+        weatherDescription + lb +
+        temp + " " + tempMin + " " + tempMax + lb);
 }
 
 
