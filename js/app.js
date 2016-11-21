@@ -1,7 +1,8 @@
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
-
+var $tab1 = $("#tab1primary");
+var $tab2 = $("#tab2primary");
 //pulls GPS weather at page load
 getLocation();
 
@@ -13,7 +14,6 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(function (position) {
             // sends position to callback to find weather
             getGeoWeather(function (data) {
-                printData(data);
                 printPanel(data);
             }, position.coords.latitude, position.coords.longitude);
         });
@@ -53,15 +53,34 @@ function getSearchWeather(callback, query) {
 $goButton.click(function (e) {
     e.preventDefault();
     getSearchWeather(function (data) {
-        console.log(data);
-        printData(data.list[0]);
+        printPanel(data.list[0]);
     }, $searchInput.val());
 });
 
 
-function printData(data) {
-    console.log(data);
-    // $.each(data, function(){
+// function printData(data) {
+//     console.log(data);
+//     // $.each(data, function(){
+//     var lb = "<br>";
+//     var name = data.name;
+//     var country = data.sys.country;
+//     var weather = data.weather[0].main;
+//     var weatherDescription = data.weather[0].description;
+//     var temp = data.main.temp;
+//     var tempMin = data.main.temp_min;
+//     var tempMax = data.main.temp_max;
+//     var windSpeed = data.wind.speed;
+//     var windDeg = data.wind.deg;
+
+//     $results.html(
+//         name + ", " + country + lb +
+//         weather + lb +
+//         weatherDescription + lb +
+//         temp + " " + tempMin + " " + tempMax + lb);
+// }
+
+
+function printPanel(data) {
     var lb = "<br>";
     var name = data.name;
     var country = data.sys.country;
@@ -72,21 +91,17 @@ function printData(data) {
     var tempMax = data.main.temp_max;
     var windSpeed = data.wind.speed;
     var windDeg = data.wind.deg;
-
-    $results.html(
-        name + ", " + country + lb +
+    $tab1.html(
+        "<h1 class='locationName'>" + name + ", " + country + "</h1>" + lb +
+        weather + lb +
+        weatherDescription + lb +
+        temp + " " + tempMin + " " + tempMax + lb);
+    $tab2.html(
+        "<h1 class='locationName'>" + name + ", " + country + "</h1>" + lb +
         weather + lb +
         weatherDescription + lb +
         temp + " " + tempMin + " " + tempMax + lb);
 }
-
-
-function printPanel(data){
-    $("#tab1primary").html("getting here");
-}
-
-printPanel();
-
 
 
 
