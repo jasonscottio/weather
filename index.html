@@ -4,20 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather Forecast</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://use.fontawesome.com/afbe68dc03.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Jason's Flikr Viewer</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <input id="searchInput" type="text" class="form-control" placeholder="Search">
+                  <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>
+</button>
+        </div>
+
+      </form>
+  </div><!-- /.container-fluid -->
+</nav>
+    <div class="container">
+        <!--<div class="jumbotron" id="results">
+            <h1>Browse Flikr!</h1>
+            <p>You can browse Flikr by searching up top. Simply enter your search term then click the search icon or press enter.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        </div>-->
+        <div id="results">
+            
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
-<body>
-    <div class="">
-        <input type="text" placeholder="Enter a city..." id="searchInput"></input>
-    </div>
-
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script type='text/javascript' src='js/app.js'></script>
 </body>
