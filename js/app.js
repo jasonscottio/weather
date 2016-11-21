@@ -1,8 +1,7 @@
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
-var $tab1 = $("#tab1primary");
-var $tab2 = $("#tab2primary");
+var $locationName = $("#locationName");
 //pulls GPS weather at page load
 getLocation();
 
@@ -36,6 +35,16 @@ function getGeoWeather(callback, lat, lon) {
     });
 }
 
+//gets weather based on geo data for 5 days
+function getGeo5day(callback, lat, lon) {
+    var weatherURL = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
+    $.ajax({
+        dataType: "jsonp",
+        url: weatherURL,
+        success: callback
+    });
+}
+
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
@@ -58,28 +67,6 @@ $goButton.click(function (e) {
 });
 
 
-// function printData(data) {
-//     console.log(data);
-//     // $.each(data, function(){
-//     var lb = "<br>";
-//     var name = data.name;
-//     var country = data.sys.country;
-//     var weather = data.weather[0].main;
-//     var weatherDescription = data.weather[0].description;
-//     var temp = data.main.temp;
-//     var tempMin = data.main.temp_min;
-//     var tempMax = data.main.temp_max;
-//     var windSpeed = data.wind.speed;
-//     var windDeg = data.wind.deg;
-
-//     $results.html(
-//         name + ", " + country + lb +
-//         weather + lb +
-//         weatherDescription + lb +
-//         temp + " " + tempMin + " " + tempMax + lb);
-// }
-
-
 function printPanel(data) {
     var lb = "<br>";
     var name = data.name;
@@ -91,17 +78,37 @@ function printPanel(data) {
     var tempMax = data.main.temp_max;
     var windSpeed = data.wind.speed;
     var windDeg = data.wind.deg;
-    $tab1.html(
-        "<h1 class='locationName'>" + name + ", " + country + "</h1>" + lb +
-        weather + lb +
-        weatherDescription + lb +
-        temp + " " + tempMin + " " + tempMax + lb);
+    $locationName.text(
+        name + ", " + country);
     $tab2.html(
         "<h1 class='locationName'>" + name + ", " + country + "</h1>" + lb +
         weather + lb +
         weatherDescription + lb +
         temp + " " + tempMin + " " + tempMax + lb);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
