@@ -4,6 +4,17 @@
     -webkit-box-sizing: border-box;
 }
 
+#loading{
+    font-size: 60px;
+    color: white;
+    text-align: center;
+    display: none;
+    position: fixed;
+    top: 0;
+    height: 50%;
+    width: 50%;
+    background-color: rgba(0,0,0,.5);
+}
 button {
     min-height: 36px;
     min-width: 40px;

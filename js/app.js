@@ -13,6 +13,8 @@ var $windSpeed = $("#windSpeed");
 var $windDeg = $("#windDeg");
 var $weatherImg = $("#weatherImg");
 
+var $loading = $("#loading");
+
 
 
 //pulls GPS weather at page load
@@ -26,6 +28,10 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(function (position) {
             // sends position to callback to find weather
             getGeoWeather(function (data) {
+                $loading.css("display", "none");
+                console.log("Getting Here!");
+                console.log(data.location);
+                console.log(data.current);
                 printPanel(data);
             }, position.coords.latitude, position.coords.longitude);
         });
@@ -39,10 +45,11 @@ function getLocation() {
 //gets weather based on geo data
 function getGeoWeather(callback, lat, lon) {
     //sets search URL with geo data
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial";
+    var weatherURL = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + lat + "," + lon;
     //sends request
+    $loading.css("display", "block");
     $.ajax({
-        dataType: "jsonp",
+        dataType: "json",
         url: weatherURL,
         success: callback
     });
@@ -51,8 +58,9 @@ function getGeoWeather(callback, lat, lon) {
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
-    var weather = 'https://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
+    var weather = 'http://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
     //sends request
+    $loading.css("display", "block");
     $.ajax({
         dataType: "jsonp",
         url: weather,
@@ -65,23 +73,24 @@ function getSearchWeather(callback, query) {
 $goButton.click(function (e) {
     e.preventDefault();
     getSearchWeather(function (data) {
+        $loading.css("display", "none");
         printPanel(data.list[0]);
     }, $searchInput.val());
 });
 
 
 function printPanel(data) {
-    // var windSpeed = data.wind.speed;
-    // var windDeg = data.wind.deg;
-    $locationName.text(data.name + ", " + data.sys.country);
-    $weather.text(data.weather[0].main);
-    $weatherDescription.text(data.weather[0].description);
-    $temp.text(data.main.temp); 
-    $tempMin.text(data.main.temp_min);
-    $tempMax.text(data.main.temp_max);
-    $windSpeed.text(data.wind.speed);
-    $windDeg.text(data.wind.deg);
-    $weatherImg.attr('src', "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
+    var location = data.location;
+    var current = data.current;
+    $locationName.text(location.name + ", " + location.region + ", " + location.country);
+    // $weather.text(data.weather[0].main);
+    // $weatherDescription.text(data.weather[0].description);
+    // $temp.text(data.main.temp); 
+    // $tempMin.text(data.main.temp_min);
+    // $tempMax.text(data.main.temp_max);
+    // $windSpeed.text(data.wind.speed);
+    // $windDeg.text(data.wind.deg);
+    // $weatherImg.attr('src', "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
 }
 
 
