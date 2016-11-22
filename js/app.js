@@ -104,6 +104,7 @@ function printPanel(data) {
     $windDeg.text(current.wind_degree);
     $windDir.text(current.wind_dir);
     $humidity.text(current.humidity);
+
 }
 
 
