@@ -88,6 +88,7 @@ $goButton.click(function (e) {
 
 
 function printPanel(data) {
+    console.log(data);
     var location = data.location;
     var current = data.current;
     var condition = current.condition;
@@ -106,77 +107,34 @@ function printPanel(data) {
 }
 
 
+var $searchInput = $('#searchInput');
+var $goButton = $('#goButton');
 
+$searchInput.keyup(function () {
+    var value="";
+    var out ="";
+    var arr =[];
+    value = $searchInput.val();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// jQuery(document).ready(function($) {
-//   $.ajax({
-//   url : "http://api.wunderground.com/api/e75bc1741a076571/geolookup/conditions/q/IA/Cedar_Rapids.json",
-//   dataType : "jsonp",
-//   success : function(parsed_json) {
-//   var location = parsed_json['location']['city'];
-//   var temp_f = parsed_json['current_observation']['temp_f'];
-//   alert("Current temperature in " + location + " is: " + temp_f);
-//   }
-//   });
-// });
-// var i;
-// var out;
-// var arr=[];
-
-
-// var $searchInput = $('#searchInput');
-// var $goButton = $('#goButton');
-
-// $searchInput.keyup(function () {
-//     var value = $searchInput.val();
-
-//     $.ajax({
-//         url: "http://autocomplete.wunderground.com/aq?&cb=call=?",
-//         dataType: "jsonp",
-//         data: {
-//             "query": value
-//         },
-//         crossDomain: true,
-//         success: function (parsed_json) {
-//             var c = $.each(parsed_json.RESULTS, function (i, item) {
-//                 out = (parsed_json.RESULTS[i].name);
-//                 arr.push(out);
-
-//             });
-//             $("#searchInput").autocomplete({
-//                 source: arr
-//             });
-//         },
-//         error: function (xhr, ajaxOptions, thrownError) {
-//             alert(xhr.status);
-//             alert(thrownError);
-//         }
-//     });
-// });
+    $.ajax({
+        url: "https://api.apixu.com/v1/search.json?key=94999ca7d68e4e5a89a195033162111&q=" + value,
+        dataType: "json",
+        crossDomain: true,
+        success: function (parsed_json) {
+            var c = $.each(parsed_json, function (i, item) {
+                out = (parsed_json[i].name);
+                arr.push(out);
+            });
+            $("#searchInput").autocomplete({
+                source: arr
+            });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+});
 
 // $goButton.on("click", function(){
 //     var query = $searchInput.val();
