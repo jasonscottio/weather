@@ -1,9 +1,15 @@
+// finds all of the jQuery body elements
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $results = $('#results');
 var $locationName = $("#locationName");
 var $panelBody = $(".panel-body");
 
+//todo red reformat loading screen
+var $loading = $("#loading");
+
+
+//initializes all the jQuery weather variables. I do it here so the browser does not have to relocate with every search
 var $weatherDescription = $("#weatherDescription");
 var $weatherImg = $("#weatherImg");
 var $tempC = $("#tempC");
@@ -19,11 +25,6 @@ var $windDir = $("#windDir");
 var $humidity = $("#humidity");
 var $cloud = $("#cloud");
 
-
-var $loading = $("#loading");
-
-
-
 //pulls GPS weather at page load
 getLocation();
 
@@ -36,19 +37,14 @@ function getLocation() {
             // sends position to callback to find weather
             getGeoWeather(function (data) {
                 $loading.css("display", "none");
-                console.log("Getting Here!");
-                console.log(data.location);
-                console.log(data.current);
-                console.log(data.current.condition);
                 printPanel(data);
             }, position.coords.latitude, position.coords.longitude);
         });
-    } else {
+    } else { //TODO: red handle default behavior
         //handle no geo data
         alert("NO GEO!");
     }
 }
-
 
 //gets weather based on geo data
 function getGeoWeather(callback, lat, lon) {
@@ -76,7 +72,6 @@ function getSearchWeather(callback, query) {
     });
 }
 
-
 //handles search request from search button
 $goButton.click(function (e) {
     e.preventDefault();
@@ -85,7 +80,6 @@ $goButton.click(function (e) {
         printPanel(data);
     }, $searchInput.val());
 });
-
 
 function printPanel(data) {
     console.log(data);
@@ -104,14 +98,10 @@ function printPanel(data) {
     $windDeg.text(current.wind_degree);
     $windDir.text(current.wind_dir);
     $humidity.text(current.humidity);
-
 }
 
-
-var $searchInput = $('#searchInput');
-var $goButton = $('#goButton');
-
 $searchInput.keyup(function () {
+    //clears variables with each keyup to prevent duplicates and errors
     var value="";
     var out ="";
     var arr =[];
@@ -136,38 +126,3 @@ $searchInput.keyup(function () {
         }
     });
 });
-
-// $goButton.on("click", function(){
-//     var query = $searchInput.val();
-//     console.log(query);
-// });
-
-// $(function () {
-//     var availableTags = [
-//         "ActionScript",
-//         "AppleScript",
-//         "Asp",
-//         "BASIC",
-//         "C",
-//         "C++",
-//         "Clojure",
-//         "COBOL",
-//         "ColdFusion",
-//         "Erlang",
-//         "Fortran",
-//         "Groovy",
-//         "Haskell",
-//         "Java",
-//         "JavaScript",
-//         "Lisp",
-//         "Perl",
-//         "PHP",
-//         "Python",
-//         "Ruby",
-//         "Scala",
-//         "Scheme"
-//     ];
-//     $("#searchInput").autocomplete({
-//         source: availableTags
-//     });
-// });
