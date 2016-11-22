@@ -4,14 +4,21 @@ var $results = $('#results');
 var $locationName = $("#locationName");
 var $panelBody = $(".panel-body");
 
-var $weather = $("#weather");
 var $weatherDescription = $("#weatherDescription");
-var $temp = $("#temp");
+var $weatherImg = $("#weatherImg");
+var $tempC = $("#tempC");
+var $tempF = $("#tempF");
+var $feelsC = $("#feelsC");
+var $feelsF = $("#feelsF");
 var $tempMin = $("#tempMin");
 var $tempMax = $("#tempMax");
-var $windSpeed = $("#windSpeed");
+var $windSpeedKPH = $("#windSpeedKPH");
+var $windSpeedMPH = $("#windSpeedMPH");
 var $windDeg = $("#windDeg");
-var $weatherImg = $("#weatherImg");
+var $windDir = $("#windDir");
+var $humidity = $("#humidity");
+var $cloud = $("#cloud");
+
 
 var $loading = $("#loading");
 
@@ -32,6 +39,7 @@ function getLocation() {
                 console.log("Getting Here!");
                 console.log(data.location);
                 console.log(data.current);
+                console.log(data.current.condition);
                 printPanel(data);
             }, position.coords.latitude, position.coords.longitude);
         });
@@ -58,11 +66,11 @@ function getGeoWeather(callback, lat, lon) {
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
-    var weather = 'http://api.openweathermap.org/data/2.5/find?q=' + query + '&type=accurate&appid=9b487de8cb6160f9df489c31f523eb98&units=imperial';
+    var weather = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
     //sends request
     $loading.css("display", "block");
     $.ajax({
-        dataType: "jsonp",
+        dataType: "json",
         url: weather,
         success: callback
     });
@@ -74,7 +82,7 @@ $goButton.click(function (e) {
     e.preventDefault();
     getSearchWeather(function (data) {
         $loading.css("display", "none");
-        printPanel(data.list[0]);
+        printPanel(data);
     }, $searchInput.val());
 });
 
@@ -82,15 +90,19 @@ $goButton.click(function (e) {
 function printPanel(data) {
     var location = data.location;
     var current = data.current;
+    var condition = current.condition;
     $locationName.text(location.name + ", " + location.region + ", " + location.country);
-    // $weather.text(data.weather[0].main);
-    // $weatherDescription.text(data.weather[0].description);
-    // $temp.text(data.main.temp); 
-    // $tempMin.text(data.main.temp_min);
-    // $tempMax.text(data.main.temp_max);
-    // $windSpeed.text(data.wind.speed);
-    // $windDeg.text(data.wind.deg);
-    // $weatherImg.attr('src', "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");    
+    $weatherDescription.text(condition.text);
+    $weatherImg.attr('src', "https:" + condition.icon);
+    $tempC.text(current.temp_c); 
+    $tempF.text(current.temp_f); 
+    $feelsC.text(current.feelslike_c);
+    $feelsF.text(current.feelslike_f);
+    $windSpeedKPH.text(current.wind_kph);
+    $windSpeedMPH.text(current.wind_mph);
+    $windDeg.text(current.wind_degree);
+    $windDir.text(current.wind_dir);
+    $humidity.text(current.humidity);
 }
 
 
