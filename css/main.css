@@ -19,6 +19,9 @@
     background-color: rgba(0,0,0,.5);
 }
 
+#unitToggle {
+    float: right;
+}
 /*SEARCH BUTTON*/
 /*button {
     min-height: 36px;

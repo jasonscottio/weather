@@ -28,6 +28,8 @@ var stored;
 var metric = true;
 
 
+getWeather("Gothenburg");
+
 //sets up toggle buttons for units
 $('#radioBtn a').on('click', function () {
     var sel = $(this).data('title');
@@ -39,42 +41,34 @@ $('#radioBtn a').on('click', function () {
     updateUnits();
 });
 
-
 //sets up pos button to get geo weather
-$posButton.click(function(e){
+$posButton.click(function (e) {
     e.preventDefault();
     getLocation();
 });
 
-//pulls GPS data from browser
+// search
+$goButton.click(function (e) {
+    e.preventDefault();
+    if ($searchInput.val() !== "") {
+        getWeather($searchInput.val());
+    } else {
+        alert("Input a Search Value!");
+    }
+});
+
 function getLocation() {
     //checks to see if there is valid geo data
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
             // sends position to callback to find weather
-            getGeoWeather(function (data) {
-                $loading.css("display", "none");
-                stored = data;
-                printPanel();
-            }, position.coords.latitude, position.coords.longitude);
+            var coords = position.coords.latitude + "," + position.coords.longitude;
+            getWeather(coords);
         });
     } else { //TODO: red handle default behavior
         //handle no geo data
         alert("Your Browser Does Not Support Geographical Information");
     }
-}
-
-//gets weather based on geo data
-function getGeoWeather(callback, lat, lon) {
-    //sets search URL with geo data
-    var weatherURL = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + lat + "," + lon;
-    //sends request
-    $loading.css("display", "block");
-    $.ajax({
-        dataType: "json",
-        url: weatherURL,
-        success: callback
-    });
 }
 
 //updates unit format
@@ -91,66 +85,42 @@ function updateUnits() {
     }
 }
 
-//gets weather based on search
-function getSearchWeather(callback, query) {
-    //sets search URL with query
-    var weather = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
-    //sends request
+function getWeather(query) {
+    //sets url variable with query
+    var url = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
+    //displays loading graphic
     $loading.css("display", "block");
+    //sends request
     $.ajax({
         dataType: "json",
-        url: weather,
-        success: callback
+        url: url,
+        success: function (data) {
+            $loading.css("display", "none");
+            stored = data;
+            printPanel();
+        }
     });
 }
-
-function getDefaultWeather(callback){
-        //sets search URL with query
-    var weather = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=Gothenburg";
-    //sends request
-    $loading.css("display", "block");
-    $.ajax({
-        dataType: "json",
-        url: weather,
-        success: callback
-    });
-}
-
-getDefaultWeather(function (data) {
-        $loading.css("display", "none");
-        console.log(data);
-        stored = data;
-        printPanel();
-});
-
-//handles search request from search button
-$goButton.click(function (e) {
-    e.preventDefault();
-    getSearchWeather(function (data) {
-        $loading.css("display", "none");
-        printPanel(data);
-    }, $searchInput.val());
-});
 
 function printPanel() {
-    var location = stored.location;
-    var current = stored.current;
-    var condition = current.condition;
-    $locationName.text(location.name + ", " + location.region + ", " + location.country);
-    $weatherDescription.text(condition.text);
-    $weatherImg.attr('src', "https:" + condition.icon);
-    $windDeg.text(current.wind_degree);
-    $windDir.text(current.wind_dir);
-    $humidity.text(current.humidity);
+    // var location = stored.location;
+    // var current = stored.current;
+    // var condition = current.condition;
+    $locationName.text(stored.location.name + ", " + stored.location.region + ", " + stored.location.country);
+    $weatherDescription.text(stored.current.condition.text);
+    $weatherImg.attr('src', "https:" + stored.current.condition.icon);
+    $windDeg.text(stored.current.wind_degree);
+    $windDir.text(stored.current.wind_dir);
+    $humidity.text(stored.current.humidity);
 
     if (metric) {
-        $temp.html(current.temp_c + " &deg;C");
-        $feels.html(current.feelslike_c + " &deg;C");
-        $windSpeed.text(current.wind_kph + " KPH");
+        $temp.html(stored.current.temp_c + " &deg;C");
+        $feels.html(stored.current.feelslike_c + " &deg;C");
+        $windSpeed.text(stored.current.wind_kph + " KPH");
     } else {
-        $temp.html(current.temp_f + " &deg;F");
-        $feels.html(current.feelslike_f + " &deg;F");
-        $windSpeed.text(current.wind_mph + " MPH");
+        $temp.html(stored.current.temp_f + " &deg;F");
+        $feels.html(stored.current.feelslike_f + " &deg;F");
+        $windSpeed.text(stored.current.wind_mph + " MPH");
     }
 }
 

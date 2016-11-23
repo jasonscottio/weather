@@ -24,8 +24,8 @@
                     <div class="input-group">
                         <input id="searchInput" type="text" class="form-control" placeholder="Search">
                         <span class="input-group-btn">
-                            <button id="posButton" class="btn btn-primary"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
                             <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            <button id="posButton" class="btn btn-primary"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
                         </span>
                     </div>
                 </div>
@@ -42,21 +42,22 @@
             </div>
             <div class="panel-body">
                 <div id="loading">LOADING DATA...</div>
-                <div class="input-group">
+                <div id="unitToggle" class="input-group">
                     <div id="radioBtn" class="btn-group">
                         <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">Metric</a>
                         <a class="btn btn-primary btn-sm notActive" data-toggle="units" data-title="imperial">Imperial</a>
                     </div>
                     <input type="hidden" name="units" id="units">
                 </div>
-                <p id="weatherDescription">Weather Description</p>
                 <img id="weatherImg">
-                <p>Temp: <span id="temp"></span></p>
+                <p id="weatherDescription">Weather Description</p>
+                
+                <p>Current Temp: <span id="temp"></span></p>
                 <p>Feels Like: <span id="feels"></span></p>
                 <p>Wind Speed: <span id="windSpeed"></span></p>
-                <p>Wind Degree: <span id="windDeg"></span></p>
+                <p>Wind Degree: <span id="windDeg"></span>&deg</p>
                 <p>Wind Direction: <span id="windDir"></span></p>
-                <p>Humidity: <span id="humidity"></span></p>
+                <p>Humidity: <span id="humidity"></span>%</p>
             </div>
         </div>
     </div>
