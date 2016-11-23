@@ -23,7 +23,7 @@ var $humidity = $("#humidity");
 var $cloud = $("#cloud");
 
 
-var storedData;
+var stored;
 var metric = true;
 
 
@@ -42,13 +42,13 @@ $('#radioBtn a').on('click', function () {
 function updateUnits() {
     metric = !metric;
     if (metric) {
-        $temp.text(storedData.current.temp_c);
-        $feels.text(storedData.current.feelslike_c);
-        $windSpeed.text(storedData.current.wind_kph);
+        $temp.html(stored.current.temp_c + " &deg;C");
+        $feels.html(stored.current.feelslike_c + " &deg;C");
+        $windSpeed.text(stored.current.wind_kph + " KPH");
     } else {
-        $temp.text(storedData.current.temp_f);
-        $feels.text(storedData.current.feelslike_f);
-        $windSpeed.text(storedData.current.wind_mph);
+        $temp.html(stored.current.temp_f + " &deg;F");
+        $feels.html(stored.current.feelslike_f + " &deg;F");
+        $windSpeed.text(stored.current.wind_mph + " MPH");
     }
 }
 
@@ -63,8 +63,8 @@ function getLocation() {
             // sends position to callback to find weather
             getGeoWeather(function (data) {
                 $loading.css("display", "none");
-                storedData = data;
-                console.log(storedData);
+                stored = data;
+                console.log(stored);
                 printPanel();
             }, position.coords.latitude, position.coords.longitude);
         });
@@ -110,8 +110,8 @@ $goButton.click(function (e) {
 });
 
 function printPanel() {
-    var location = storedData.location;
-    var current = storedData.current;
+    var location = stored.location;
+    var current = stored.current;
     var condition = current.condition;
     $locationName.text(location.name + ", " + location.region + ", " + location.country);
     $weatherDescription.text(condition.text);
@@ -121,13 +121,13 @@ function printPanel() {
     $humidity.text(current.humidity);
 
     if (metric) {
-        $temp.text(current.temp_c);
-        $feels.text(current.feelslike_c);
-        $windSpeed.text(current.wind_kph);
+        $temp.html(current.temp_c + " &deg;C");
+        $feels.html(current.feelslike_c + " &deg;C");
+        $windSpeed.text(current.wind_kph + " KPH");
     } else {
-        $temp.text(current.temp_f);
-        $feels.text(current.feelslike_f);
-        $windSpeed.text(current.wind_mph);
+        $temp.html(current.temp_f + " &deg;F");
+        $feels.html(current.feelslike_f + " &deg;F");
+        $windSpeed.text(current.wind_mph + " MPH");
     }
 }
 
