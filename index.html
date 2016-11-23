@@ -20,10 +20,14 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input id="searchInput" type="text" class="form-control" placeholder="Search">
-                    <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>
-</button>
+                <div class="container-fluid">
+                    <div class="input-group">
+                        <input id="searchInput" type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button id="posButton" type="submit" class="btn btn-primary"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+                            <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
                 </div>
             </form>
         </div>
@@ -37,21 +41,23 @@
                 <h1 id="locationName">Location Name</h1>
             </div>
             <div class="panel-body">
+                <div id="loading">LOADING DATA...</div>
+                <div class="input-group">
+                    <div id="radioBtn" class="btn-group">
+                        <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">Metric</a>
+                        <a class="btn btn-primary btn-sm notActive" data-toggle="units" data-title="imperial">Imperial</a>
+                    </div>
+                    <input type="hidden" name="units" id="units">
+                </div>
                 <p id="weatherDescription">Weather Description</p>
                 <img id="weatherImg">
-                <p>Temp in C:<span id="tempC"></span></p>
-                <p>Temp in F:<span id="tempF"></span></p>
-                <p>Feels Like C:<span id="feelsC"></span></p>
-                <p>Feels Like F:<span id="feelsF"></span></p>
-                <!--<p>Min Temp:<span id="tempMin"></span></p>
-                <p>Max Temp:<span id="tempMax"></span></p>-->
-                <p>Wind Speed KPH:<span id="windSpeedKPH"></span></p>
-                <p>Wind Speed MPH:<span id="windSpeedMPH"></span></p>
-                <p>Wind Degree:<span id="windDeg"></span></p>
-                <p>Wind Direction:<span id="windDir"></span></p>
-                <p>Humidity:<span id="humidity"></span></p>
+                <p>Temp: <span id="temp"></span></p>
+                <p>Feels Like: <span id="feels"></span></p>
+                <p>Wind Speed: <span id="windSpeed"></span></p>
+                <p>Wind Degree: <span id="windDeg"></span></p>
+                <p>Wind Direction: <span id="windDir"></span></p>
+                <p>Humidity: <span id="humidity"></span></p>
             </div>
-            <div id="loading">LOADING DATA...</div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
