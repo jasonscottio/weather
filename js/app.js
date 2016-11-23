@@ -1,6 +1,7 @@
 // finds all of the jQuery body elements
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
+var $posButton = $('#posButton');
 var $results = $('#results');
 var $locationName = $("#locationName");
 var $panelBody = $(".panel-body");
@@ -39,21 +40,11 @@ $('#radioBtn a').on('click', function () {
 });
 
 
-function updateUnits() {
-    metric = !metric;
-    if (metric) {
-        $temp.html(stored.current.temp_c + " &deg;C");
-        $feels.html(stored.current.feelslike_c + " &deg;C");
-        $windSpeed.text(stored.current.wind_kph + " KPH");
-    } else {
-        $temp.html(stored.current.temp_f + " &deg;F");
-        $feels.html(stored.current.feelslike_f + " &deg;F");
-        $windSpeed.text(stored.current.wind_mph + " MPH");
-    }
-}
-
-//pulls GPS weather at page load
-getLocation();
+//sets up pos button to get geo weather
+$posButton.click(function(e){
+    e.preventDefault();
+    getLocation();
+});
 
 //pulls GPS data from browser
 function getLocation() {
@@ -64,13 +55,12 @@ function getLocation() {
             getGeoWeather(function (data) {
                 $loading.css("display", "none");
                 stored = data;
-                console.log(stored);
                 printPanel();
             }, position.coords.latitude, position.coords.longitude);
         });
     } else { //TODO: red handle default behavior
         //handle no geo data
-        alert("NO GEO");
+        alert("Your Browser Does Not Support Geographical Information");
     }
 }
 
@@ -87,6 +77,20 @@ function getGeoWeather(callback, lat, lon) {
     });
 }
 
+//updates unit format
+function updateUnits() {
+    metric = !metric;
+    if (metric) {
+        $temp.html(stored.current.temp_c + " &deg;C");
+        $feels.html(stored.current.feelslike_c + " &deg;C");
+        $windSpeed.text(stored.current.wind_kph + " KPH");
+    } else {
+        $temp.html(stored.current.temp_f + " &deg;F");
+        $feels.html(stored.current.feelslike_f + " &deg;F");
+        $windSpeed.text(stored.current.wind_mph + " MPH");
+    }
+}
+
 //gets weather based on search
 function getSearchWeather(callback, query) {
     //sets search URL with query
@@ -99,6 +103,25 @@ function getSearchWeather(callback, query) {
         success: callback
     });
 }
+
+function getDefaultWeather(callback){
+        //sets search URL with query
+    var weather = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=Gothenburg";
+    //sends request
+    $loading.css("display", "block");
+    $.ajax({
+        dataType: "json",
+        url: weather,
+        success: callback
+    });
+}
+
+getDefaultWeather(function (data) {
+        $loading.css("display", "none");
+        console.log(data);
+        stored = data;
+        printPanel();
+});
 
 //handles search request from search button
 $goButton.click(function (e) {
