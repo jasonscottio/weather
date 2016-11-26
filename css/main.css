@@ -2,70 +2,123 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+.navbar-brand,
+.btn-group a {
+    font-family: 'Arimo', sans-serif;
+}
+
+.panel-body {
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#temp {
+    font-size: 24px;
 }
 
 
-/*LOADING SCREEN*/
-#loading{
-    font-size: 60px;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    display: none;
-    position: absolute;
-    top: 53px;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,.5);
-}
+/* ====================
+    UNIT TOGGLE STYLES
+   ====================*/
 
 #unitToggle {
     float: right;
 }
-/*SEARCH BUTTON*/
-/*button {
-    min-height: 36px;
-    min-width: 40px;
-    color: inherit;
-    margin-left: -3px;
-    font-size: 40px;
-}*/
+
+#unitRow {
+    padding-right: 0;
+}
 
 
-@media (min-width: 768px){
-    .navbar-right{
+/* =============
+    PANEL STYLES
+   =============*/
+
+.panel {
+    max-width: 720px;
+    margin: 0 auto;
+    margin-top: 5%;
+    font-size: 11px;
+}
+
+
+/* ============ 
+    ICON STYLES
+   ============*/
+
+#weatherImg {
+    display: inline-block;
+    width: 110px;
+    height: 110px
+}
+
+#windSpan {
+    height: 110px;
+    width: 110px;
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#windDir {
+    color: #985e6d;
+    font-size: 80px;
+}
+
+/* ==============
+    MEDIA QUERIES
+    ============== */
+
+@media (min-width: 768px) {
+    .navbar-right {
         width: 60%;
         text-align: center;
     }
-
-    .form-group{
-        width: 100%;
+    #primaryInfo,
+    #secondaryInfo {
+        display: flex;
+        flex-direction: column;
+        height: 150px;
+        width: 150px;
+        float: right;
+        font-size: 19px;
+        justify-content: center;
     }
+    #infoRow {
+        margin-top: 20px;
+    }
+    .panel {
+        margin-top: 5%;
+    }
+}
 
-    #searchBox {
-        width: 80%;
+@media (min-width: 375px) {
+    #weatherImg,
+    #windSpan {
+        width: 150px;
+        height: 150px;
+    }
+    #windDir {
+        font-size: 100px;
+    }
+    .panel {
+        font-size: 14px;
+    }
+    #temp {
+        font-size: 32px;
     }
 }
 
 @media (max-width: 767px) {
-
     #locationName {
-        font-size: 2.5rem;
-    }
-    .navbar-right{
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .form-group {
-        width: 100%;
-        text-align: center;
-    }
-    .form-group input{
-        width: 75%;
-        display: inline-block;
-    }
-    .form-group button{
-        display: inline-block
+        font-size: 26px;
     }
 }
-

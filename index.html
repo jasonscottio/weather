@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <title>Weather Forecast</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Arimo:400,700|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/weather-icons-wind.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/theme.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -14,50 +16,62 @@
 
 <body>
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Jason's Weather Forecast</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <form class="navbar-form navbar-right">
-                <div class="container-fluid">
-                    <div class="input-group">
-                        <input id="searchInput" type="text" class="form-control" placeholder="Search">
-                        <span class="input-group-btn">
+                <!--<div class="container-fluid">-->
+                <div class="input-group">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
                             <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
                             <button id="posButton" class="btn btn-primary"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
                         </span>
-                    </div>
                 </div>
+                <!--</div>-->
             </form>
         </div>
         <!-- /.container-fluid -->
     </nav>
     <div class="container">
-        <div id="results">
-        </div>
         <div class="panel  panel-primary">
             <div class="panel-heading">
                 <h1 id="locationName">Location Name</h1>
             </div>
             <div class="panel-body">
-                <div id="loading">LOADING DATA...</div>
-                <div id="unitToggle" class="input-group">
-                    <div id="radioBtn" class="btn-group">
-                        <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">Metric</a>
-                        <a class="btn btn-primary btn-sm notActive" data-toggle="units" data-title="imperial">Imperial</a>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div id="unitRow" class="col-xs-12">
+                            <div id="unitToggle" class="input-group">
+                                <div id="radioBtn" class="btn-group">
+                                    <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">&degC</a>
+                                    <a class="btn btn-primary btn-sm notActive" data-toggle="units" data-title="imperial">&degF</a>
+                                </div>
+                                <input type="hidden" name="units" id="units">
+                            </div>
+                        </div>
                     </div>
-                    <input type="hidden" name="units" id="units">
+                    <div id="infoRow" class="row">
+                        <div class="col-xs-6">
+                            <img id="weatherImg">
+                            <div id="primaryInfo">
+                                <p><span id="temp"></span></p>
+                                <p id="weatherDescription">Weather Description</p>
+                                <p>Feels Like: <span id="feels"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <span id="windSpan"><i id="windDir" class=""></i></span>
+                            <div id="secondaryInfo">
+                                <p>Speed: <span id="windSpeed"></span></p>
+                                <p>Humidity: <span id="humidity"></span>%</p>
+                                <p>Cloud Cover: <span id="cloud"></span>%</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <img id="weatherImg">
-                <p id="weatherDescription">Weather Description</p>
-                
-                <p>Current Temp: <span id="temp"></span></p>
-                <p>Feels Like: <span id="feels"></span></p>
-                <p>Wind Speed: <span id="windSpeed"></span></p>
-                <p>Wind Degree: <span id="windDeg"></span>&deg</p>
-                <p>Wind Direction: <span id="windDir"></span></p>
-                <p>Humidity: <span id="humidity"></span>%</p>
             </div>
         </div>
     </div>
