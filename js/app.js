@@ -17,8 +17,8 @@ var $cloud = $("#cloud");
 
 
 var stored;
-var metric = true;
 
+var units = "metric";
 
 var $loading = $('#loading');
 
@@ -28,6 +28,7 @@ getWeather("Gothenburg");
 //sets up toggle buttons for units
 $('#radioBtn a').on('click', function () {
     var sel = $(this).data('title');
+    units = sel;
     var tog = $(this).data('toggle');
     $('#' + tog).prop('value', sel);
 
@@ -106,7 +107,7 @@ function printPanel() {
     $humidity.text(stored.current.humidity);
     $cloud.text(stored.current.cloud);
 
-    if (metric) {
+    if (units == "metric") {
         temp.innerHTML = stored.current.temp_c + "&deg";
         feels.innerHTML = stored.current.feelslike_c + "&deg";
         windSpeed.innerHTML = stored.current.wind_kph + " KPH";
