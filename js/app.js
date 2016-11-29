@@ -8,9 +8,9 @@ var $panelBody = $(".panel-body");
 //initializes all the jQuery weather variables. I do it here so the browser does not have to relocate with every search
 var $weatherDescription = $("#weatherDescription");
 var $weatherImg = $("#weatherImg");
-var $temp = $("#temp");
-var $feels = $("#feels");
-var $windSpeed = $("#windSpeed");
+var temp = document.getElementById("temp");
+var feels = document.getElementById("feels");
+var windSpeed = document.getElementById("windSpeed");
 var $windDir = $("#windDir");
 var $humidity = $("#humidity");
 var $cloud = $("#cloud");
@@ -18,6 +18,9 @@ var $cloud = $("#cloud");
 
 var stored;
 var metric = true;
+
+
+var $loading = $('#loading');
 
 
 getWeather("Gothenburg");
@@ -66,17 +69,18 @@ function getLocation() {
 //updates unit format
 function updateUnits(sel) {
     if (sel == "metric") {
-        $temp.html(stored.current.temp_c + " &deg;");
-        $feels.html(stored.current.feelslike_c + " &deg;");
-        $windSpeed.text(stored.current.wind_kph + " KPH");
+        temp.innerHTML = stored.current.temp_c + "&deg";
+        feels.innerHTML = stored.current.feelslike_c + "&deg";
+        windSpeed.innerHTML = stored.current.wind_kph + " KPH";
     } else {
-        $temp.html(stored.current.temp_f + " &deg;");
-        $feels.html(stored.current.feelslike_f + " &deg;");
-        $windSpeed.text(stored.current.wind_mph + " MPH");
+        temp.innerHTML = stored.current.temp_f + "&deg;";
+        feels.innerHTML = stored.current.feelslike_f + "&deg;";
+        windSpeed.innerHTML = stored.current.wind_mph + " MPH";
     }
 }
 
 function getWeather(query) {
+    $loading.fadeIn("fast");
     //sets url variable with query
     var url = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
     //displays loading graphic
@@ -85,6 +89,7 @@ function getWeather(query) {
         dataType: "json",
         url: url,
         success: function (data)  {
+            $loading.fadeOut("fast");
             stored = data;
             printPanel();
         }
@@ -102,13 +107,13 @@ function printPanel() {
     $cloud.text(stored.current.cloud);
 
     if (metric) {
-        $temp.html(stored.current.temp_c + "&deg");
-        $feels.html(stored.current.feelslike_c + "&deg");
-        $windSpeed.text(stored.current.wind_kph + " KPH");
+        temp.innerHTML = stored.current.temp_c + "&deg";
+        feels.innerHTML = stored.current.feelslike_c + "&deg";
+        windSpeed.innerHTML = stored.current.wind_kph + " KPH";
     } else {
-        $temp.html(stored.current.temp_f + "&deg;");
-        $feels.html(stored.current.feelslike_f + "&deg;");
-        $windSpeed.text(stored.current.wind_mph + " MPH");
+        temp.innerHTML = stored.current.temp_f + "&deg;";
+        feels.innerHTML = stored.current.feelslike_f + "&deg;";
+        windSpeed.innerHTML = stored.current.wind_mph + " MPH";
     }
 }
 
