@@ -98,7 +98,11 @@ h4,
     MEDIA QUERIES
     ============== */
 
-@media (min-width: 768px) {
+@media (min-width: 375px){
+
+}
+
+/*@media (min-width: 768px) {
     .navbar-right {
         width: 60%;
         text-align: center;
@@ -141,5 +145,5 @@ h4,
 @media (max-width: 767px) {
     #locationName {
         font-size: 26px;
-    }
-}
+    }*/
+/*}*/
