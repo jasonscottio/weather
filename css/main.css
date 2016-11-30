@@ -41,7 +41,7 @@ h4,
 }
 
 #temp {
-    font-size: 24px;
+    font-size: 2.5em;
 }
 
 
@@ -61,28 +61,44 @@ h4,
 /* =============
     PANEL STYLES
    =============*/
-
+#locationName{
+    font-size: 2em;
+}
 .panel {
-    max-width: 720px;
+    max-width: 768px;
     margin: 0 auto;
     margin-top: 5%;
-    font-size: 11px;
 }
 
+.panel-body {
+    font-size: .85em;
+}
 
+#primaryInfo, #secondaryInfo, #weatherCol, #windCol {
+    padding: 0;
+}
+#weatherCol, #windCol {
+    text-align: center;
+}
+
+#primaryInfo, #secondaryInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 /* ============ 
     ICON STYLES
    ============*/
 
 #weatherImg {
     display: inline-block;
-    width: 110px;
-    height: 110px
+    width: 8em;
+    height: 8em;
 }
 
 #windSpan {
-    height: 110px;
-    width: 110px;
+    height: 8em;
+    width: 8em;
     display: inline-flex;
     display: -webkit-inline-flex;
     justify-content: center;
@@ -91,7 +107,7 @@ h4,
 
 #windDir {
     color: #985e6d;
-    font-size: 80px;
+    font-size: 5em;
 }
 
 /* ==============
@@ -99,51 +115,38 @@ h4,
     ============== */
 
 @media (min-width: 375px){
-
-}
-
-/*@media (min-width: 768px) {
-    .navbar-right {
-        width: 60%;
-        text-align: center;
-    }
-    #primaryInfo,
-    #secondaryInfo {
-        display: flex;
-        flex-direction: column;
-        height: 150px;
-        width: 150px;
-        float: right;
-        font-size: 19px;
-        justify-content: center;
-    }
-    #infoRow {
-        margin-top: 20px;
-    }
-    .panel {
-        margin-top: 5%;
-    }
-}
-
-@media (min-width: 375px) {
-    #weatherImg,
-    #windSpan {
-        width: 150px;
-        height: 150px;
-    }
-    #windDir {
-        font-size: 100px;
-    }
-    .panel {
-        font-size: 14px;
-    }
-    #temp {
-        font-size: 32px;
-    }
-}
-
-@media (max-width: 767px) {
     #locationName {
-        font-size: 26px;
-    }*/
-/*}*/
+        font-size: 2em;
+    }
+
+    .panel-body {
+        font-size: 1.1em;
+    }
+}
+
+@media (min-width: 450px) {
+    #locationName {
+        font-size: 2.3em;
+    }
+    .panel-body {
+        font-size: 1.4em;
+    }
+
+    
+}
+
+@media (min-width: 768px){
+    #unitRow {
+        margin-bottom: 5%;
+    }
+    .panel-body{
+        font-size: 1.3em;
+    }
+
+    #primaryCol, #secondaryCol {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+}

@@ -16,7 +16,6 @@
 
 <body>
     <div id="loading"><img src="img/loading.gif"></div>
-
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -35,7 +34,6 @@
     </nav>
     <div class="container">
         <div class="panel  panel-primary">
-
             <div class="panel-heading">
                 <h1 id="locationName">Location Name</h1>
             </div>
@@ -53,20 +51,28 @@
                         </div>
                     </div>
                     <div id="infoRow" class="row">
-                        <div class="col-xs-6">
-                            <img id="weatherImg">
-                            <div id="primaryInfo">
-                                <p><span id="temp"></span></p>
-                                <p id="weatherDescription">Weather Description</p>
-                                <p>Feels Like: <span id="feels"></span></p>
+                        <div id="primaryCol" class="col-xs-6">
+                            <div id="weatherCol" class="col-xs-12 col-sm-6">
+                                <img id="weatherImg">
+                            </div>
+                            <div id="primaryInfo" class="col-xs-12 col-sm-6">
+                                <div>
+                                    <p><span id="temp"></span></p>
+                                    <p id="weatherDescription">Weather Description</p>
+                                    <p>Feels Like: <span id="feels"></span></p>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-6">
-                            <span id="windSpan"><i id="windDir" class=""></i></span>
-                            <div id="secondaryInfo">
-                                <p>Speed: <span id="windSpeed"></span></p>
-                                <p>Humidity: <span id="humidity"></span>%</p>
-                                <p>Cloud Cover: <span id="cloud"></span>%</p>
+                        <div id="secondaryCol" class="col-xs-6">
+                            <div id="windCol" class="col-xs-12 col-sm-6">
+                                <span id="windSpan"><i id="windDir" class=""></i></span>
+                            </div>
+                            <div id="secondaryInfo" class="col-xs-12 col-sm-6">
+                                <div>
+                                    <p>Speed: <span id="windSpeed"></span></p>
+                                    <p>Humidity: <span id="humidity"></span>%</p>
+                                    <p>Cloud Cover: <span id="cloud"></span>%</p>
+                                </div>
                             </div>
                         </div>
                     </div>
