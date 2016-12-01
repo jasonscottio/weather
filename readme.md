@@ -4,9 +4,6 @@ Weather Forecast
 ===================
 
 
-### Table of contents
-
-[TOC]
 
 
 Description
@@ -15,6 +12,8 @@ This web app was built for my Frontend JavaScript course at Lernia. This is the 
 
 
 ----------
+
+
 
 
 Design Process
