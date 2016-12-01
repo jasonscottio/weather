@@ -37,7 +37,7 @@ $('#radioBtn a').on('click', function () {
     //toggles styling between active and not
     $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-    updateUnits(sel);
+    updateUnits();
 });
 
 //sets up pos button to get geo weather
@@ -71,8 +71,8 @@ function getLocation() {
 }
 
 //updates unit format
-function updateUnits(sel) {
-    if (sel == "metric") {
+function updateUnits() {
+    if (units == "metric") {
         temp.innerHTML = stored.current.temp_c + "&deg";
         feels.innerHTML = stored.current.feelslike_c + "&deg";
         windSpeed.innerHTML = stored.current.wind_kph + " KPH";
@@ -101,7 +101,10 @@ function getWeather(query) {
 }
 
 function printPanel() {
-
+    if(stored.location === undefined){
+        alert("Invalid Search");
+        return null;
+    }
     $locationName.text(stored.location.name + ", " + stored.location.region + ", " + stored.location.country);
     $weatherDescription.text(stored.current.condition.text);
     $weatherImg.attr('src', "https:" + stored.current.condition.icon);
