@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Weather Forecast</title>
+    <title>WeathView</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Arimo:400,700|Open+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,6 +39,7 @@
         </div>
     </nav>
     <div class="container">
+        <!--Panel-->
         <div class="panel  panel-primary">
             <div class="panel-heading">
                 <h1 id="locationName">Location Name</h1>
@@ -47,6 +48,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div id="unitRow" class="col-xs-12">
+                            <!--Unit Toggles-->
                             <div id="unitToggle" class="input-group">
                                 <div id="radioBtn" class="btn-group">
                                     <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">&degC</a>
@@ -57,10 +59,12 @@
                         </div>
                     </div>
                     <div id="infoRow" class="row">
+                        <!--Primary Column-->
                         <div id="primaryCol" class="col-xs-6">
                             <div id="weatherCol" class="col-xs-12 col-sm-6">
                                 <img id="weatherImg">
                             </div>
+                            <!--Primary Info-->
                             <div id="primaryInfo" class="col-xs-12 col-sm-6">
                                 <div>
                                     <p><span id="temp"></span></p>
@@ -69,10 +73,12 @@
                                 </div>
                             </div>
                         </div>
+                        <!--Secondary Column-->
                         <div id="secondaryCol" class="col-xs-6">
                             <div id="windCol" class="col-xs-12 col-sm-6">
                                 <span id="windSpan"><i id="windDir" class=""></i></span>
                             </div>
+                            <!--Secondary Info-->
                             <div id="secondaryInfo" class="col-xs-12 col-sm-6">
                                 <div>
                                     <p>Speed: <span id="windSpeed"></span></p>
@@ -86,6 +92,7 @@
             </div>
         </div>
     </div>
+    <!--Footer-->
     <footer class="footer">
         Made with Apixu Weather API
     </footer>

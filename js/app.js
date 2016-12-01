@@ -101,10 +101,14 @@ function getWeather(query) {
 }
 
 function printPanel() {
+
+    //handles case where search returned no value
     if(stored.location === undefined){
         alert("Invalid Search");
         return null;
     }
+
+    // sets all the values from stored return location
     $locationName.text(stored.location.name + ", " + stored.location.region + ", " + stored.location.country);
     $weatherDescription.text(stored.current.condition.text);
     $weatherImg.attr('src', "https:" + stored.current.condition.icon);
@@ -124,6 +128,8 @@ function printPanel() {
     }
 }
 
+
+// handles auto complete
 $searchInput.keyup(function () {
     //clears variables with each keyup to prevent duplicates and errors
     var value = "";
