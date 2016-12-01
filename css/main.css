@@ -9,6 +9,17 @@ body, html{
     min-height: 100%;
 }
 
+.footer{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    display: block;
+    height: 20px;
+    bottom: 0;
+    font-size: .75em;
+    padding: 0;
+}
+
 #loading{
     display: flex;
     align-items: center;
@@ -35,11 +46,16 @@ h4,
     font-family: 'Arimo', sans-serif;
 }
 
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5em;
+    letter-spacing: .1em;
+}
+
 .panel-body {
     padding-top: 5%;
     padding-bottom: 5%;
 }
-
 #temp {
     font-size: 2.5em;
 }
@@ -68,6 +84,9 @@ h4,
     max-width: 768px;
     margin: 0 auto;
     margin-top: 5%;
+  -webkit-box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
+-moz-box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
+box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
 }
 
 .panel-body {
@@ -122,6 +141,10 @@ h4,
     .panel-body {
         font-size: 1.1em;
     }
+
+    #unitRow {
+        margin-bottom: 2.5%;
+    }
 }
 
 @media (min-width: 450px) {
@@ -131,14 +154,9 @@ h4,
     .panel-body {
         font-size: 1.4em;
     }
-
-    
 }
 
 @media (min-width: 768px){
-    #unitRow {
-        margin-bottom: 5%;
-    }
     .panel-body{
         font-size: 1.3em;
     }
@@ -148,5 +166,24 @@ h4,
         justify-content: center;
         align-items: center;
         height: 100%;
+    }
+
+    .panel {
+        margin-top: 7.5%;
+    }
+
+    .footer {
+        font-size: 1em;
+    }
+    
+}
+
+@media (min-width: 1200px){
+    .panel{
+        max-width: 900px;
+    }
+
+    .panel-body {
+        font-size: 1.6em;
     }
 }
