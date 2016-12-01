@@ -3,35 +3,38 @@ var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $posButton = $('#posButton');
 var $locationName = $("#locationName");
-var $panelBody = $(".panel-body");
+var $loading = $('#loading');
 
-//initializes all the jQuery weather variables. I do it here so the browser does not have to relocate with every search
+//initializes all the jQuery weather variables. 
+//I do it here so the browser does not have to relocate 
+//with every search - would be performance hit
 var $weatherDescription = $("#weatherDescription");
 var $weatherImg = $("#weatherImg");
-var temp = document.getElementById("temp");
-var feels = document.getElementById("feels");
 var windSpeed = document.getElementById("windSpeed");
 var $windDir = $("#windDir");
 var $humidity = $("#humidity");
 var $cloud = $("#cloud");
 
 
-var stored;
+// vanilla DOM selectors
+var temp = document.getElementById("temp");
+var feels = document.getElementById("feels");
 
+// variables for handling unit toggling
+var stored;
 var units = "metric";
 
-var $loading = $('#loading');
-
-
+// intial forecast for gothenburg
 getWeather("Gothenburg");
 
 //sets up toggle buttons for units
 $('#radioBtn a').on('click', function () {
     var sel = $(this).data('title');
+    //assigns the stored units as the clicked one
     units = sel;
     var tog = $(this).data('toggle');
-    $('#' + tog).prop('value', sel);
 
+    //toggles styling between active and not
     $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
     updateUnits(sel);
@@ -43,7 +46,7 @@ $posButton.click(function (e) {
     getLocation();
 });
 
-// search
+// search button 
 $goButton.click(function (e) {
     e.preventDefault();
     if ($searchInput.val() !== "") {
