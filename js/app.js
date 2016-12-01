@@ -133,21 +133,21 @@ function printPanel() {
 $searchInput.keyup(function () {
     //clears variables with each keyup to prevent duplicates and errors
     var value = "";
-    var out = "";
-    var arr = [];
+    var name = "";
+    var nameList = [];
     value = $searchInput.val();
 
     $.ajax({
         url: "https://api.apixu.com/v1/search.json?key=94999ca7d68e4e5a89a195033162111&q=" + value,
         dataType: "json",
         crossDomain: true,
-        success: function (parsed_json) {
-            var c = $.each(parsed_json, function (i, item) {
-                out = (parsed_json[i].name);
-                arr.push(out);
+        success: function (data) {
+            var c = $.each(data, function (i, item) {
+                name = (data[i].name);
+                nameList.push(name);
             });
             $("#searchInput").autocomplete({
-                source: arr
+                source: nameList
             });
         },
         error: function (xhr, ajaxOptions, thrownError) {
