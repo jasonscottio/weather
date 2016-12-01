@@ -1,3 +1,7 @@
+/*=========
+    GENERAL
+  ==========*/
+
 * {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -5,36 +9,9 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-body, html{
+body,
+html {
     min-height: 100%;
-}
-
-.footer{
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    display: block;
-    height: 20px;
-    bottom: 0;
-    font-size: .75em;
-    padding: 0;
-}
-
-#loading{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    background-color: rgba(0,0,0,0.5);
-}
-
-#loading img {
-    height: 100px;
 }
 
 h1,
@@ -46,18 +23,52 @@ h4,
     font-family: 'Arimo', sans-serif;
 }
 
+
+/* ========
+    FOOTER
+   ========*/
+
+.footer {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    display: block;
+    height: 20px;
+    bottom: 0;
+    font-size: .75em;
+    padding: 0;
+}
+
+
+/* =========
+    LOADING
+   =========*/
+
+#loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#loading img {
+    height: 100px;
+}
+
+/* =======
+    BRAND
+   =======*/
+
 .navbar-brand {
     font-weight: 700;
     font-size: 1.5em;
     letter-spacing: .1em;
-}
-
-.panel-body {
-    padding-top: 5%;
-    padding-bottom: 5%;
-}
-#temp {
-    font-size: 2.5em;
 }
 
 
@@ -77,34 +88,55 @@ h4,
 /* =============
     PANEL STYLES
    =============*/
-#locationName{
+
+#locationName {
     font-size: 2em;
 }
+
 .panel {
     max-width: 768px;
     margin: 0 auto;
     margin-top: 5%;
-  -webkit-box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
--moz-box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
-box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 8px 8px 10px -1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 8px 8px 10px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 8px 8px 10px -1px rgba(0, 0, 0, 0.1);
 }
 
 .panel-body {
+    padding-top: 5%;
+    padding-bottom: 5%;
     font-size: .85em;
 }
 
-#primaryInfo, #secondaryInfo, #weatherCol, #windCol {
+/* =============
+    INFO STYLES
+   =============
+*/
+
+#temp {
+    font-size: 2.5em;
+}
+
+#primaryInfo,
+#secondaryInfo,
+#weatherCol,
+#windCol {
     padding: 0;
 }
-#weatherCol, #windCol {
+
+#weatherCol,
+#windCol {
     text-align: center;
 }
 
-#primaryInfo, #secondaryInfo {
+#primaryInfo,
+#secondaryInfo {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+
 /* ============ 
     ICON STYLES
    ============*/
@@ -129,19 +161,18 @@ box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
     font-size: 5em;
 }
 
+
 /* ==============
     MEDIA QUERIES
     ============== */
 
-@media (min-width: 375px){
+@media (min-width: 375px) {
     #locationName {
         font-size: 2em;
     }
-
     .panel-body {
         font-size: 1.1em;
     }
-
     #unitRow {
         margin-bottom: 2.5%;
     }
@@ -156,33 +187,30 @@ box-shadow: 8px 8px 10px -1px rgba(0,0,0,0.1);
     }
 }
 
-@media (min-width: 768px){
-    .panel-body{
-        font-size: 1.3em;
-    }
-
-    #primaryCol, #secondaryCol {
+@media (min-width: 768px) {
+    #primaryCol,
+    #secondaryCol {
         display: flex;
+        display: -webkit-flex;
         justify-content: center;
         align-items: center;
         height: 100%;
     }
-
     .panel {
         margin-top: 7.5%;
     }
-
+    .panel-body {
+        font-size: 1.3em;
+    }
     .footer {
         font-size: 1em;
     }
-    
 }
 
-@media (min-width: 1200px){
-    .panel{
+@media (min-width: 1200px) {
+    .panel {
         max-width: 900px;
     }
-
     .panel-body {
         font-size: 1.6em;
     }
