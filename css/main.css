@@ -8,10 +8,11 @@
     -webkit-box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
 }
- 
+
 body {
     margin: 0 0 20px;
 }
+
 html {
     position: relative;
     min-height: 100%;
@@ -66,6 +67,7 @@ h4,
     height: 100px;
 }
 
+
 /* =======
     BRAND
    =======*/
@@ -74,6 +76,7 @@ h4,
     font-weight: 700;
     font-size: 1.5em;
     letter-spacing: .1em;
+    font-size: 1.7em;
 }
 
 
@@ -112,6 +115,7 @@ h4,
     padding-bottom: 5%;
     font-size: .85em;
 }
+
 
 /* =============
     INFO STYLES
@@ -181,6 +185,7 @@ h4,
     #unitRow {
         margin-bottom: 2.5%;
     }
+
 }
 
 @media (min-width: 450px) {
@@ -218,5 +223,8 @@ h4,
     }
     .panel-body {
         font-size: 1.6em;
+    }
+    .navbar-brand {
+        font-size: 1.8em;
     }
 }
