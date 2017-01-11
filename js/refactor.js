@@ -52,3 +52,5 @@ function handleData(data){
     stored = data;
     printPanel();
 }
+
+

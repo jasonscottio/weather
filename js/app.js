@@ -8,8 +8,8 @@ var $loading = $('#loading');
 //initializes all the jQuery weather variables. 
 //I do it here so the browser does not have to relocate 
 //with every search - would be performance hit
-var $weatherDescription = $("#weatherDescription");
-var $weatherImg = $("#weatherImg");
+var $currentDescription = $("#currentDescription");
+var $currentImg = $("#currentImg");
 var windSpeed = document.getElementById("windSpeed");
 var $windDir = $("#windDir");
 var $humidity = $("#humidity");
@@ -17,12 +17,18 @@ var $cloud = $("#cloud");
 
 
 // vanilla DOM selectors
-var temp = document.getElementById("temp");
-var feels = document.getElementById("feels");
+var currentTemp = document.getElementById("currentTemp");
+var feels = document.getElementById("currentFeels");
 
 // variables for handling unit toggling
-var stored;
+var storedForecast;
 var units = "metric";
+
+
+var $dates = $(".date");
+var $forecastImgs = $(".forecastImg");
+var $highs = $(".forecastHigh");
+var $lows = $(".forecastLow");
 
 // intial forecast for gothenburg
 getWeather("Gothenburg");
@@ -73,58 +79,78 @@ function getLocation() {
 //updates unit format
 function updateUnits() {
     if (units == "metric") {
-        temp.innerHTML = stored.current.temp_c + "&deg";
-        feels.innerHTML = stored.current.feelslike_c + "&deg";
-        windSpeed.innerHTML = stored.current.wind_kph + " KPH";
+        currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
+        feels.innerHTML = storedForecast.current.feelslike_c + "&deg";
+        windSpeed.innerHTML = storedForecast.current.wind_kph + " KPH";
     } else {
-        temp.innerHTML = stored.current.temp_f + "&deg;";
-        feels.innerHTML = stored.current.feelslike_f + "&deg;";
-        windSpeed.innerHTML = stored.current.wind_mph + " MPH";
+        currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
+        feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
+        windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
     }
 }
 
 function getWeather(query) {
     $loading.fadeIn("fast");
-    //sets url variable with query
-    var url = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
-    //displays loading graphic
-    //sends request
+    //sets currentUrl variable with query
+    var forecastUrl = "https://api.apixu.com/v1/forecast.json?key=94999ca7d68e4e5a89a195033162111&days=5&q=" + query;
+
     $.ajax({
         dataType: "json",
-        url: url,
-        success: function (data)  {
+        url: forecastUrl,
+        success: function (data) {
             $loading.fadeOut("fast");
-            stored = data;
+            storedForecast = data;
             printPanel();
         }
     });
+
 }
 
 function printPanel() {
 
     //handles case where search returned no value
-    if(stored.location === undefined){
+    if (storedForecast.location === undefined) {
         alert("Invalid Search");
         return null;
     }
 
     // sets all the values from stored return location
-    $locationName.text(stored.location.name + ", " + stored.location.region + ", " + stored.location.country);
-    $weatherDescription.text(stored.current.condition.text);
-    $weatherImg.attr('src', "https:" + stored.current.condition.icon);
+    $locationName.text(storedForecast.location.name + ", " + storedForecast.location.region + ", " + storedForecast.location.country);
+    $currentDescription.text(storedForecast.current.condition.text);
+    $currentImg.attr('src', "https:" + storedForecast.current.condition.icon);
     $windDir.removeClass();
-    $windDir.addClass("wi wi-wind wi-towards-" + stored.current.wind_dir.toLowerCase());
-    $humidity.text(stored.current.humidity);
-    $cloud.text(stored.current.cloud);
+    $windDir.addClass("wi wi-wind wi-towards-" + storedForecast.current.wind_dir.toLowerCase());
+    $humidity.text(storedForecast.current.humidity);
+    $cloud.text(storedForecast.current.cloud);
+
+    $dates.each(function (i) {
+        $(this).text(storedForecast.forecast.forecastday[i].date.substr(5));
+    });
+    $forecastImgs.each(function (i) {
+        $(this).attr('src', "https:" + storedForecast.forecast.forecastday[i].day.condition.icon);
+    });
+
 
     if (units == "metric") {
-        temp.innerHTML = stored.current.temp_c + "&deg";
-        feels.innerHTML = stored.current.feelslike_c + "&deg";
-        windSpeed.innerHTML = stored.current.wind_kph + " KPH";
+        currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
+        feels.innerHTML = storedForecast.current.feelslike_c + "&deg";
+        windSpeed.innerHTML = storedForecast.current.wind_kph + " KPH";
+        $highs.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_c + "&deg");
+        });
+        $lows.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
+        });
     } else {
-        temp.innerHTML = stored.current.temp_f + "&deg;";
-        feels.innerHTML = stored.current.feelslike_f + "&deg;";
-        windSpeed.innerHTML = stored.current.wind_mph + " MPH";
+        currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
+        feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
+        windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
+        $highs.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_f + "&deg");
+        });
+        $lows.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_f + "&deg");
+        });
     }
 }
 

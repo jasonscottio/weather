@@ -59,28 +59,31 @@
                             </div>
                         </div>
                     </div>
+                    <!--TAB NAV-->
                     <div id="tabNav" class="container-fluid">
                         <ul class="nav nav-tabs">
                             <li class="active">
                                 <a href="#tab1" data-toggle="tab">Current</a>
                             </li>
-                            <li><a href="#tab2" data-toggle="tab">3 Day</a>
+                            <li><a href="#tab2" data-toggle="tab">5 Day</a>
                             </li>
                         </ul>
+                        <!--TAB CONTENT-->
                         <div class="tab-content ">
+                            <!--FIRST TAB-->
                             <div class="tab-pane active" id="tab1">
                                 <div id="infoRow" class="row">
                                     <!--Primary Column-->
                                     <div id="primaryCol" class="col-xs-6">
                                         <div id="weatherCol" class="col-xs-12 col-sm-6">
-                                            <img id="weatherImg">
+                                            <img id="currentImg">
                                         </div>
                                         <!--Primary Info-->
                                         <div id="primaryInfo" class="col-xs-12 col-sm-6">
                                             <div>
-                                                <p><span id="temp"></span></p>
-                                                <p id="weatherDescription">Weather Description</p>
-                                                <p>Feels Like: <span id="feels"></span></p>
+                                                <p><span id="currentTemp"></span></p>
+                                                <p id="currentDescription">Weather Description</p>
+                                                <p>Feels Like: <span id="currentFeels"></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +103,50 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--SECOND TAB-->
                             <div class="tab-pane" id="tab2">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th></th>
+                                            <th>High</th>
+                                            <th>Low</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="date" scope="row"></th>
+                                            <td><img src="" alt="" class="forecastImg"></td>
+                                            <td class="forecastHigh"></td>
+                                            <td class="forecastLow"></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="date" scope="row"></th>
+                                            <td><img src="" alt="" class="forecastImg"></td>
+                                            <td class="forecastHigh"></td>
+                                            <td class="forecastLow"></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="date" scope="row">3</th>
+                                            <td><img src="" alt="" class="forecastImg"></td>
+                                            <td class="forecastHigh"></td>
+                                            <td class="forecastLow"></td>
+                                        </tr>
+                                                                                <tr>
+                                            <th class="date" scope="row">3</th>
+                                            <td><img src="" alt="" class="forecastImg"></td>
+                                            <td class="forecastHigh"></td>
+                                            <td class="forecastLow"></td>
+                                        </tr>
+                                                                                <tr>
+                                            <th class="date" scope="row">3</th>
+                                            <td><img src="" alt="" class="forecastImg"></td>
+                                            <td class="forecastHigh"></td>
+                                            <td class="forecastLow"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
