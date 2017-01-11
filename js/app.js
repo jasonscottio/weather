@@ -22,6 +22,7 @@ var feels = document.getElementById("currentFeels");
 
 // variables for handling unit toggling
 var storedForecast;
+var storedHistorical;
 var units = "metric";
 
 
@@ -30,6 +31,15 @@ var $forecastImgs = $(".forecastImg");
 var $highs = $(".forecastHigh");
 var $lows = $(".forecastLow");
 
+
+$("#datepicker").datepicker({
+    dateFormat: "yy-mm-dd",
+    minDate: "2015-01-01",
+    maxDate: -1,
+    onSelect: function (date, dp) {
+        getHistorical(date);
+    }
+});
 // intial forecast for gothenburg
 getWeather("Gothenburg");
 
@@ -82,10 +92,22 @@ function updateUnits() {
         currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
         feels.innerHTML = storedForecast.current.feelslike_c + "&deg";
         windSpeed.innerHTML = storedForecast.current.wind_kph + " KPH";
+        $highs.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_c + "&deg");
+        });
+        $lows.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
+        });
     } else {
         currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
         feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
         windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
+        $highs.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_f + "&deg");
+        });
+        $lows.each(function (i) {
+            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_f + "&deg");
+        });
     }
 }
 
@@ -103,7 +125,21 @@ function getWeather(query) {
             printPanel();
         }
     });
+}
 
+function getHistorical(date) {
+    $loading.fadeIn("fast");
+
+    var historicalUrl = "https://api.apixu.com/v1/history.json?key=94999ca7d68e4e5a89a195033162111&dt=" + date + "&q=" + storedForecast.location.lat + "," + storedForecast.location.lon;
+
+    $.ajax({
+        dataType: "json",
+        url: historicalUrl,
+        success: function (data) {
+            $loading.fadeOut("fast");
+            storedHistorical = data;
+        }
+    });
 }
 
 function printPanel() {
