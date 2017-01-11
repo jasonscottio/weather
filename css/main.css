@@ -229,3 +229,13 @@ h4,
         font-size: 1.8em;
     }
 }
+
+.date {
+    font-size: .8em;
+    display: block;
+    text-align: center;
+}
+
+th, td{
+    text-align: center;
+}
