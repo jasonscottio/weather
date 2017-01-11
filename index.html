@@ -59,50 +59,64 @@
                             </div>
                         </div>
                     </div>
-                    <div id="infoRow" class="row">
-                        <!--Primary Column-->
-                        <div id="primaryCol" class="col-xs-6">
-                            <div id="weatherCol" class="col-xs-12 col-sm-6">
-                                <img id="weatherImg">
-                            </div>
-                            <!--Primary Info-->
-                            <div id="primaryInfo" class="col-xs-12 col-sm-6">
-                                <div>
-                                    <p><span id="temp"></span></p>
-                                    <p id="weatherDescription">Weather Description</p>
-                                    <p>Feels Like: <span id="feels"></span></p>
+                    <div id="tabNav" class="container-fluid">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab1" data-toggle="tab">Current</a>
+                            </li>
+                            <li><a href="#tab2" data-toggle="tab">3 Day</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content ">
+                            <div class="tab-pane active" id="tab1">
+                                <div id="infoRow" class="row">
+                                    <!--Primary Column-->
+                                    <div id="primaryCol" class="col-xs-6">
+                                        <div id="weatherCol" class="col-xs-12 col-sm-6">
+                                            <img id="weatherImg">
+                                        </div>
+                                        <!--Primary Info-->
+                                        <div id="primaryInfo" class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <p><span id="temp"></span></p>
+                                                <p id="weatherDescription">Weather Description</p>
+                                                <p>Feels Like: <span id="feels"></span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Secondary Column-->
+                                    <div id="secondaryCol" class="col-xs-6">
+                                        <div id="windCol" class="col-xs-12 col-sm-6">
+                                            <span id="windSpan"><i id="windDir" class=""></i></span>
+                                        </div>
+                                        <!--Secondary Info-->
+                                        <div id="secondaryInfo" class="col-xs-12 col-sm-6">
+                                            <div>
+                                                <p>Speed: <span id="windSpeed"></span></p>
+                                                <p>Humidity: <span id="humidity"></span>%</p>
+                                                <p>Cloud Cover: <span id="cloud"></span>%</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--Secondary Column-->
-                        <div id="secondaryCol" class="col-xs-6">
-                            <div id="windCol" class="col-xs-12 col-sm-6">
-                                <span id="windSpan"><i id="windDir" class=""></i></span>
-                            </div>
-                            <!--Secondary Info-->
-                            <div id="secondaryInfo" class="col-xs-12 col-sm-6">
-                                <div>
-                                    <p>Speed: <span id="windSpeed"></span></p>
-                                    <p>Humidity: <span id="humidity"></span>%</p>
-                                    <p>Cloud Cover: <span id="cloud"></span>%</p>
-                                </div>
+                            <div class="tab-pane" id="tab2">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div </div>
         </div>
-    </div>
-    <!--Footer-->
-    <footer class="footer">
-        Made with Apixu Weather API
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-    <script type='text/javascript' src='js/jquery-ui.min.js'></script>
-    <script type='text/javascript' src='js/app.js'></script>
+        <!--Footer-->
+        <footer class="footer">
+            Made with Apixu Weather API
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+                crossorigin="anonymous"></script>
+                <script type='text/javascript' src='js/jquery-ui.min.js'></script>
+                <script type='text/javascript' src='js/app.js'></script>
 </body>
 
 </html>
