@@ -4,11 +4,12 @@ Weather Forecast
 ===================
 
 
+Live at https://jasonscott.io/weather
 
 
 Description
 -------------
-This web app was built for my Frontend JavaScript course at Lernia. This is the final project for the introductory course to HTML, CSS, and Javascript. It utilizes Boostrap 3, jQuery, jQuery UI, and the Apixu weather API. 
+This web app was built for my Frontend JavaScript course at Lernia. This is the final project for the course that covers AJAX. It utilizes Boostrap 3, jQuery, jQuery UI, and the Apixu weather API. 
 
 
 ----------
@@ -56,4 +57,14 @@ Self Review
  - Color scheme could perhaps be improved.
  - A custom brand logo could be implemented if it were a real project.
  - Some buggy functionality when dealing with special characters and Apixu's API.
+ 
+-------------
+
+My Info
+-------------------
+Jason Scott
+Frontend Student at Lernia
+
+LinkedIn : https://www.linkedin.com/in/jason-scott-dev
+
 
