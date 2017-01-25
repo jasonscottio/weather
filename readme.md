@@ -63,6 +63,7 @@ Self Review
 My Info
 -------------------
 Jason Scott
+
 Frontend Student at Lernia
 
 LinkedIn : https://www.linkedin.com/in/jason-scott-dev
