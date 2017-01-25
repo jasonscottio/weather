@@ -129,10 +129,12 @@ function updateUnits() {
 
     } else {
         
-        
+        //CHANGES CURRENT
         currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
         feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
         windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
+
+        //CHANGES FORECAST
         $highs.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_f + "&deg");
         });
@@ -140,6 +142,7 @@ function updateUnits() {
             $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_f + "&deg");
         });
 
+        // CHANGES HISTORICAL IF HISTORICAL EXISTS
         if(historicPrinted){
             $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_f + "&deg");
             $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_f + "&deg");
@@ -204,18 +207,21 @@ function getHistoric(lat, lon, date){
 //PRINTS DATA TO HISTORY TABLE
 function printHistoric(){
 
-    //handles case where date returns no weather
+    // HANDLES INVALID DATE
     if (storedHistoric.location === undefined){
         alert("Invalid Date");
         return null;
     }
 
+    // CHANGES HISTORIC VARIABLES
     historicPrinted = true;
     $historicTable.show();
 
     $historicDate.text(storedHistoric.forecast.forecastday[0].date.substr(5));
     $historicImg.attr('src', "https:" + storedHistoric.forecast.forecastday[0].day.condition.icon);
 
+
+    // this stays in this function rather than calling update units every time because this results in a reduced amount of code run despite it going against DRY
     if(units === "metric"){
         $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_c + "&deg");
         $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_c + "&deg");
@@ -252,34 +258,7 @@ function printPanel() {
         $(this).attr('src', "https:" + storedForecast.forecast.forecastday[i].day.condition.icon);
     });
 
-    //DETERMINES WHAT UNITS TO PRINT DATA IN
-    if (units == "metric") {
-        //sets CURRENT weather metric units
-        currentTemp.innerHTML = storedCurrent.current.temp_c + "&deg";
-        feels.innerHTML = storedCurrent.current.feelslike_c + "&deg";
-        windSpeed.innerHTML = storedCurrent.current.wind_kph + " KPH";
-
-        //sets FORECAST weather metric units
-        $highs.each(function (i) {
-            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_c + "&deg");
-        });
-        $lows.each(function (i) {
-            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
-        });
-    } else {
-        //sets CURRENT weather imperial units
-        currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
-        feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
-        windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
-
-        //sets FORECAST weather imperial units
-        $highs.each(function (i) {
-            $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_f + "&deg");
-        });
-        $lows.each(function (i) {
-            $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_f + "&deg");
-        });
-    }
+    updateUnits();
 }
 
 //HANDLES AUTO COMPLETE ON SEARCH BAR
