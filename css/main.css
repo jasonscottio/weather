@@ -172,6 +172,34 @@ h4,
     font-size: 5em;
 }
 
+/* ===========
+      TABLES
+    ==========*/
+
+.date, #historicDate {
+    font-size: .8em;
+}
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#historicTable {
+    display: none;
+    margin-top: 1.5em;
+}
+
+ul.nav.nav-tabs > li > a {
+padding-left: .5em;
+padding-right: .5em;
+}
+
+.tab-content {
+    padding-top: 1.5em;
+}
 
 /* ==============
     MEDIA QUERIES
@@ -232,27 +260,3 @@ h4,
     }
 }
 
-.date, #historicDate {
-    font-size: .8em;
-}
-
-.table > tbody > tr > td,
-.table > tbody > tr > th,
-th {
-    text-align: center;
-    vertical-align: middle;
-}
-
-#historicTable {
-    display: none;
-    margin-top: 1.5em;
-}
-
-ul.nav.nav-tabs > li > a {
-padding-left: .5em;
-padding-right: .5em;
-}
-
-.tab-content {
-    padding-top: 1.5em;
-}

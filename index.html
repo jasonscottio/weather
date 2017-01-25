@@ -16,23 +16,23 @@
 </head>
 
 <body>
-    <!--Loading Screen-->
+    <!--LOADING WHEEL-->
     <div id="loading"><img src="img/loading.gif"></div>
-    <!--Navbar-->
+    <!--NAVBAR-->
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">WeathView <i class="wi wi-day-cloudy"></i></a>
             </div>
-            <!--Search Bar-->
+            <!--SEARCH BAR-->
             <form class="navbar-form navbar-right">
                 <div class="input-group">
                     <input id="searchInput" type="text" class="form-control" placeholder="Search">
-                    <!--Buttons-->
+                    <!--BUTTONS-->
                     <span class="input-group-btn">
-                            <!--Search Button-->
+                            <!--SEARCH BUTTON-->
                             <button id="goButton" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i></button>
-                            <!--Geo Button-->
+                            <!--GEO BUTTON-->
                             <button id="posButton" class="btn btn-primary"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
                         </span>
                 </div>
@@ -40,7 +40,7 @@
         </div>
     </nav>
     <div class="container">
-        <!--Panel-->
+        <!--PANEL-->
         <div class="panel  panel-primary">
             <div class="panel-heading">
                 <h1 id="locationName">Location Name</h1>
@@ -49,7 +49,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div id="unitRow" class="col-xs-12">
-                            <!--Unit Toggles-->
+                            <!--UNIT TOGGLE BUTTONS-->
                             <div id="unitToggle" class="input-group">
                                 <div id="radioBtn" class="btn-group">
                                     <a class="btn btn-primary btn-sm active" data-toggle="units" data-title="metric">&degC</a>
@@ -74,12 +74,12 @@
                             <!--FIRST TAB-->
                             <div class="tab-pane active" id="tab1">
                                 <div id="infoRow" class="row">
-                                    <!--Primary Column-->
+                                    <!--PRIMARY COLUMN-->
                                     <div id="primaryCol" class="col-xs-6">
                                         <div id="weatherCol" class="col-xs-12 col-sm-6">
                                             <img id="currentImg">
                                         </div>
-                                        <!--Primary Info-->
+                                        <!--PRIMARY INFO-->
                                         <div id="primaryInfo" class="col-xs-12 col-sm-6">
                                             <div>
                                                 <p><span id="currentTemp"></span></p>
@@ -88,12 +88,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--Secondary Column-->
+                                    <!--SECONDARY COLUMN-->
                                     <div id="secondaryCol" class="col-xs-6">
                                         <div id="windCol" class="col-xs-12 col-sm-6">
                                             <span id="windSpan"><i id="windDir" class=""></i></span>
                                         </div>
-                                        <!--Secondary Info-->
+                                        <!--SECONDARY INFO-->
                                         <div id="secondaryInfo" class="col-xs-12 col-sm-6">
                                             <div>
                                                 <p>Speed: <span id="windSpeed"></span></p>
@@ -106,6 +106,7 @@
                             </div>
                             <!--SECOND TAB-->
                             <div class="tab-pane" id="tab2">
+                                <!--TABLE FOR FORECAST-->
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -152,6 +153,7 @@
                             <!--THIRD TAB-->
                             <div class="tab-pane" id="tab3">
                                 <p>Select a date: <input type="text" id="datepicker" value=""></p>
+                                <!--TABLE FOR HISTORICAL WEATHER-->
                                 <table id ="historicTable" class="table table-striped">
                                     <thead>
                                         <tr>
@@ -167,7 +169,6 @@
                                         <td id="historicHigh"></td>
                                         <td id="historicLow"></td>
                                     </tr>
-                                    
                                 </table>
                             </div>
                         </div>

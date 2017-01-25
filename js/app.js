@@ -1,3 +1,8 @@
+/*
+  All of these variables are init at the top of the program so that jQuery does not have to find the related DOM elements every time 
+  a search is completed. This is done in order to save resources and provide a quicker experience.
+*/
+
 // INITS ALL jQUERY BODY ELEMENTS
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
@@ -19,17 +24,15 @@ var currentTemp = document.getElementById("currentTemp");
 var feels = document.getElementById("currentFeels");
 
 // INITS RETURNED DATA SO IT CAN BE ACCESSED FOR UNIT TOGGLE
-var storedCurrent;
-var storedForecast;
-var storedHistoric;
+var storedCurrent, storedForecast, storedHistoric;
 var units = "metric";
+var historicPrinted = false;
 
 // INITS FORECAST jQUERY VARIABLES
 var $dates = $(".date");
 var $forecastImgs = $(".forecastImg");
 var $highs = $(".forecastHigh");
 var $lows = $(".forecastLow");
-
 
 // INITS HISTORIC jQUERY VARIABLES
 var $historicDate = $("#historicDate");
@@ -38,15 +41,44 @@ var $historicHigh = $("#historicHigh");
 var $historicLow = $("#historicLow");
 var $historicTable = $("#historicTable");
 
-var historicPrinted = false;
+
 
 // INITIAL FORECAST FOR GOTHENBURG
 getWeather("Gothenburg");
+setupButtons();
 
 
+// FUNCTION TO GROUP ALL INITIAL SETUP
+function setupButtons (){
+    // INITS TOGGLE BUTTONS FOR UNITS
+    $('#radioBtn a').on('click', function () {
+        var sel = $(this).data('title');
+        // ASSIGNS STORED UNITS AS CLICKED
+        units = sel;
+        var tog = $(this).data('toggle');
+        // TOGGLES BUTTON STYLING BETWEEN ACTIVE AND NOT
+        $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
+        $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
+        updateUnits();
+    });
 
-// INITS DATE PICKER
-$( function() {
+    // SETS UP POS BUTTON FOR GEO WEATHER
+    $posButton.click(function (e) {
+        e.preventDefault();
+        getLocation();
+    });
+
+    // SETS UP SEARCH BUTTON
+    $goButton.click(function (e) {
+        e.preventDefault();
+        if ($searchInput.val() !== "") {
+            getWeather($searchInput.val());
+        } else {
+            alert("Input a Search Value!");
+        }
+    });
+
+    // INITS DATE PICKER
     $( "#datepicker" ).datepicker({
         selectOtherMonths: false,
         minDate: -7,
@@ -56,37 +88,9 @@ $( function() {
             getHistoric(storedCurrent.location.lat, storedCurrent.location.lon, date);
         }
     });
-} );
+}
 
-// INITS TOGGLE BUTTONS FOR UNITS
-$('#radioBtn a').on('click', function () {
-    var sel = $(this).data('title');
-    // ASSIGNS STORED UNITS AS CLICKED
-    units = sel;
-    var tog = $(this).data('toggle');
-
-    // TOGGLES BUTTON STYLING BETWEEN ACTIVE AND NOT
-    $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
-    $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
-    updateUnits();
-});
-
-// SETS UP POS BUTTON FOR GEO WEATHER
-$posButton.click(function (e) {
-    e.preventDefault();
-    getLocation();
-});
-
-// SETS UP SEARCH BUTTON
-$goButton.click(function (e) {
-    e.preventDefault();
-    if ($searchInput.val() !== "") {
-        getWeather($searchInput.val());
-    } else {
-        alert("Input a Search Value!");
-    }
-});
-
+//GETS BROWSER GEO INFO
 function getLocation() {
     // CHECKS FOR VALID GEO DATA
     if ("geolocation" in navigator) {
@@ -104,9 +108,12 @@ function getLocation() {
 //UPDATES UNIT DATA
 function updateUnits() {
     if (units == "metric") {
+        //CHANGES CURRENT
         currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
         feels.innerHTML = storedForecast.current.feelslike_c + "&deg";
         windSpeed.innerHTML = storedForecast.current.wind_kph + " KPH";
+
+        //CHANGES FORECAST
         $highs.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_c + "&deg");
         });
@@ -114,12 +121,15 @@ function updateUnits() {
             $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
         });
 
+        //CHANGES HISTORICAL IF HISTORICAL EXISTS
         if(historicPrinted){
             $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_c + "&deg");
             $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_c + "&deg");
         }
 
     } else {
+        
+        
         currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
         feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
         windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
@@ -137,6 +147,7 @@ function updateUnits() {
     }   
 }
 
+//GETS WEATHER DATA BASED ON VARIOUS SEARCH CRITERIA
 function getWeather(query) {
     //FADES IN LOADING ICON
     $loading.fadeIn("fast");
@@ -175,7 +186,7 @@ function getWeather(query) {
 
 }
 
-// HISTORIC REQUEST
+//GETS WEATHER BASED ON HISTORICAL DATE
 function getHistoric(lat, lon, date){
     var historicUrl = "https://api.apixu.com/v1/history.json?key=94999ca7d68e4e5a89a195033162111&dt=" + date + "&q=" + lat + "," + lon;
     
@@ -190,6 +201,7 @@ function getHistoric(lat, lon, date){
     });
 }
 
+//PRINTS DATA TO HISTORY TABLE
 function printHistoric(){
 
     //handles case where date returns no weather
@@ -214,6 +226,7 @@ function printHistoric(){
 
 }
 
+//PRINTS NON-HISTORICAL DATA TO MAIN PANELS
 function printPanel() {
 
     //handles case where search returned no value
@@ -269,9 +282,9 @@ function printPanel() {
     }
 }
 
-
-// handles auto complete
+//HANDLES AUTO COMPLETE ON SEARCH BAR
 $searchInput.keyup(function () {
+
     //clears variables with each keyup to prevent duplicates and errors
     var value = "";
     var name = "";
@@ -290,10 +303,6 @@ $searchInput.keyup(function () {
             $("#searchInput").autocomplete({
                 source: nameList
             });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);        dataType: "json",
-            alert(thrownError);
         }
     });
 });
