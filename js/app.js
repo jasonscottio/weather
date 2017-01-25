@@ -4,6 +4,7 @@ var $goButton = $('#goButton');
 var $posButton = $('#posButton');
 var $locationName = $("#locationName");
 var $loading = $('#loading');
+var $datepicker = $("#datepicker");
 
 // INITS CURRENT WEATHER jQUERY VARIABLES
 var $currentDescription = $("#currentDescription");
@@ -142,6 +143,8 @@ function getWeather(query) {
 
     $historicTable.hide();
     historicPrinted = false;
+    $datepicker.val("");
+
 
     // SETS QUERY URL FOR CURRENT AND FORECAST QUERIES
     var currentUrl = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
