@@ -67,6 +67,7 @@
                             </li>
                             <li><a href="#tab2" data-toggle="tab">5 Day</a>
                             </li>
+                            <li><a href="#tab3" data-toggle="tab">Last Week</a></li>
                         </ul>
                         <!--TAB CONTENT-->
                         <div class="tab-content ">
@@ -146,6 +147,26 @@
                                             <td class="forecastLow"></td>
                                         </tr>
                                     </tbody>
+                                </table>
+                            </div>
+                            <!--THIRD TAB-->
+                            <div class="tab-pane" id="tab3">
+                                <p>Select a date: <input type="text" id="datepicker" value=""></p>
+                                <table id ="historicTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th></th>
+                                            <th>High</th>
+                                            <th>Low</th>
+                                        </tr>
+                                        <tr>
+                                            <th id="historicDate" scope="row"></th>
+                                            <td><img src="" alt="" id="historicImg"></td>
+                                            <td id="historicHigh"></td>
+                                            <td id="historicLow"></td>
+                                        </tr>
+                                    </thead>
                                 </table>
                             </div>
                         </div>

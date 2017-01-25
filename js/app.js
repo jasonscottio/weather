@@ -1,13 +1,11 @@
-// finds all of the jQuery body elements
+// INITS ALL jQUERY BODY ELEMENTS
 var $searchInput = $('#searchInput');
 var $goButton = $('#goButton');
 var $posButton = $('#posButton');
 var $locationName = $("#locationName");
 var $loading = $('#loading');
 
-//initializes all the jQuery weather variables. 
-//I do it here so the browser does not have to relocate 
-//with every search - would be performance hit
+// INITS CURRENT WEATHER jQUERY VARIABLES
 var $currentDescription = $("#currentDescription");
 var $currentImg = $("#currentImg");
 var windSpeed = document.getElementById("windSpeed");
@@ -16,44 +14,66 @@ var $humidity = $("#humidity");
 var $cloud = $("#cloud");
 
 
-// vanilla DOM selectors
+// VANILLA DOM SELECTORS FOR PROJECT GOALS
 var currentTemp = document.getElementById("currentTemp");
 var feels = document.getElementById("currentFeels");
 
-// variables for handling unit toggling
+// INITS RETURNED DATA SO IT CAN BE ACCESSED FOR UNIT TOGGLE
+var storedCurrent;
 var storedForecast;
+var storedHistory;
 var units = "metric";
 
-
+// INITS FORECAST jQUERY VARIABLES
 var $dates = $(".date");
 var $forecastImgs = $(".forecastImg");
 var $highs = $(".forecastHigh");
 var $lows = $(".forecastLow");
 
 
-// intial forecast for gothenburg
+// INITS HISTORIC jQUERY VARIABLES
+var $historicDate = $("#historicDate");
+var $historicImg = $("historicImg");
+var $historicHigh = $("historicHigh");
+var $historicLow = $("historicLow");
+
+// INITIAL FORECAST FOR GOTHENBURG
 getWeather("Gothenburg");
 
-//sets up toggle buttons for units
+
+// INITS DATE PICKER
+$( function() {
+    $( "#datepicker" ).datepicker({
+        selectOtherMonths: false,
+        minDate: -7,
+        maxDate: 0,
+        dateFormat: "yy-mm-dd",
+        onSelect: function(date) {
+            getHistoric(storedCurrent.location.lat, storedCurrent.location.lon, date);
+        }
+    });
+} );
+
+// INITS TOGGLE BUTTONS FOR UNITS
 $('#radioBtn a').on('click', function () {
     var sel = $(this).data('title');
-    //assigns the stored units as the clicked one
+    // ASSIGNS STORED UNITS AS CLICKED
     units = sel;
     var tog = $(this).data('toggle');
 
-    //toggles styling between active and not
+    // TOGGLES BUTTON STYLING BETWEEN ACTIVE AND NOT
     $('a[data-toggle="' + tog + '"]').not('[data-title="' + sel + '"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="' + tog + '"][data-title="' + sel + '"]').removeClass('notActive').addClass('active');
     updateUnits();
 });
 
-//sets up pos button to get geo weather
+// SETS UP POS BUTTON FOR GEO WEATHER
 $posButton.click(function (e) {
     e.preventDefault();
     getLocation();
 });
 
-// search button 
+// SETS UP SEARCH BUTTON
 $goButton.click(function (e) {
     e.preventDefault();
     if ($searchInput.val() !== "") {
@@ -64,20 +84,20 @@ $goButton.click(function (e) {
 });
 
 function getLocation() {
-    //checks to see if there is valid geo data
+    // CHECKS FOR VALID GEO DATA
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            // sends position to callback to find weather
+            // SENDS POSITION TO GET WEATHER
             var coords = position.coords.latitude + "," + position.coords.longitude;
             getWeather(coords);
         });
     } else {
-        //handle no geo data
+        // HANDLE NO GEO DATA
         alert("Your Browser Does Not Support Geographical Information");
     }
 }
 
-//updates unit format
+//UPDATES UNIT DATA
 function updateUnits() {
     if (units == "metric") {
         currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
@@ -103,10 +123,25 @@ function updateUnits() {
 }
 
 function getWeather(query) {
+    //FADES IN LOADING ICON
     $loading.fadeIn("fast");
-    //sets currentUrl variable with query
-    var forecastUrl = "https://api.apixu.com/v1/forecast.json?key=94999ca7d68e4e5a89a195033162111&days=5&q=" + query;
 
+    // SETS QUERY URL FOR CURRENT AND FORECAST QUERIES
+    var currentUrl = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
+    var forecastUrl = "https://api.apixu.com/v1/forecast.json?key=94999ca7d68e4e5a89a195033162111&days=5&q=" + query;
+    
+    // CURRENT REQUEST
+    $.ajax({
+        dataType: "json",
+        url: currentUrl,
+        success: function (data) {
+            $loading.fadeOut("fast");
+            storedCurrent = data;
+            printPanel();
+        }
+    });
+
+    // FORECAST REQUEST
     $.ajax({
         dataType: "json",
         url: forecastUrl,
@@ -116,25 +151,65 @@ function getWeather(query) {
             printPanel();
         }
     });
+
+
+}
+
+// HISTORIC REQUEST
+function getHistoric(lat, lon, date){
+    var historyUrl = "https://api.apixu.com/v1/history.json?key=94999ca7d68e4e5a89a195033162111&dt=" + date + "&q=" + lat + "," + lon;
+    
+    $.ajax({
+        dataType: "json",
+        url: historyUrl,
+        success: function (data) {
+            $loading.fadeOut("fast");
+            storedHistory = data;
+            printHistoric();
+        }
+    });
+}
+
+function printHistoric(){
+
+    //handles case where date returns no weather
+    if (storedHistory.location === undefined){
+        alert("Invalid Date");
+        return null;
+    }
+
+
+    $historicDate.text(storedHistory.forecast.forecastday[0].date.substr(5));
+    $historicImg.attr('src', "https:" + storedHistoric.forecast.forecastday[0].day.condition.icon);
+
+    if(units === "metric"){
+        $historicHigh.html(storedHistory.forecast.forecastday[0].day.maxtemp_c + "&deg");
+        $historicLow.html(storedHistory.forecast.forecastday[0].day.mintemp_c + "&deg");
+    } else {
+        $historicHigh.html(storedHistory.forecast.forecastday[0].day.maxtemp_f + "&deg");
+        $historicLow.html(storedHistory.forecast.forecastday[0].day.mintemp_f + "&deg");
+    }
+
 }
 
 function printPanel() {
 
     //handles case where search returned no value
-    if (storedForecast.location === undefined) {
+    if (storedCurrent.location === undefined) {
         alert("Invalid Search");
         return null;
     }
 
-    // sets all the values from stored return location
-    $locationName.text(storedForecast.location.name + ", " + storedForecast.location.region + ", " + storedForecast.location.country);
-    $currentDescription.text(storedForecast.current.condition.text);
-    $currentImg.attr('src', "https:" + storedForecast.current.condition.icon);
+    // sets all the  CURRENT NON UNIT values from stored CURRENT return location
+    $locationName.text(storedCurrent.location.name + ", " + storedCurrent.location.region + ", " + storedCurrent.location.country);
+    $currentDescription.text(storedCurrent.current.condition.text);
+    $currentImg.attr('src', "https:" + storedCurrent.current.condition.icon);
     $windDir.removeClass();
-    $windDir.addClass("wi wi-wind wi-towards-" + storedForecast.current.wind_dir.toLowerCase());
-    $humidity.text(storedForecast.current.humidity);
-    $cloud.text(storedForecast.current.cloud);
+    $windDir.addClass("wi wi-wind wi-towards-" + storedCurrent.current.wind_dir.toLowerCase());
+    $humidity.text(storedCurrent.current.humidity);
+    $cloud.text(storedCurrent.current.cloud);
 
+    // sets all the FORECAST NON UNIT values from stored FORECAST return location
     $dates.each(function (i) {
         $(this).text(storedForecast.forecast.forecastday[i].date.substr(5));
     });
@@ -142,11 +217,14 @@ function printPanel() {
         $(this).attr('src', "https:" + storedForecast.forecast.forecastday[i].day.condition.icon);
     });
 
-
+    //DETERMINES WHAT UNITS TO PRINT DATA IN
     if (units == "metric") {
-        currentTemp.innerHTML = storedForecast.current.temp_c + "&deg";
-        feels.innerHTML = storedForecast.current.feelslike_c + "&deg";
-        windSpeed.innerHTML = storedForecast.current.wind_kph + " KPH";
+        //sets CURRENT weather metric units
+        currentTemp.innerHTML = storedCurrent.current.temp_c + "&deg";
+        feels.innerHTML = storedCurrent.current.feelslike_c + "&deg";
+        windSpeed.innerHTML = storedCurrent.current.wind_kph + " KPH";
+
+        //sets FORECAST weather metric units
         $highs.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_c + "&deg");
         });
@@ -154,9 +232,12 @@ function printPanel() {
             $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
         });
     } else {
+        //sets CURRENT weather imperial units
         currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
         feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
         windSpeed.innerHTML = storedForecast.current.wind_mph + " MPH";
+
+        //sets FORECAST weather imperial units
         $highs.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.maxtemp_f + "&deg");
         });
@@ -189,7 +270,7 @@ $searchInput.keyup(function () {
             });
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
+            alert(xhr.status);        dataType: "json",
             alert(thrownError);
         }
     });
