@@ -91,6 +91,7 @@ h4,
 
 #unitRow {
     padding-right: 0;
+    padding-bottom: 1.5%;
 }
 
 
@@ -196,6 +197,7 @@ h4,
     .panel-body {
         font-size: 1.4em;
     }
+
 }
 
 @media (min-width: 768px) {
@@ -230,12 +232,27 @@ h4,
     }
 }
 
-.date {
+.date, #historicDate {
     font-size: .8em;
-    display: block;
-    text-align: center;
 }
 
-th, td{
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+th {
     text-align: center;
+    vertical-align: middle;
+}
+
+#historicTable {
+    display: none;
+    margin-top: 1.5em;
+}
+
+ul.nav.nav-tabs > li > a {
+padding-left: .5em;
+padding-right: .5em;
+}
+
+.tab-content {
+    padding-top: 1.5em;
 }

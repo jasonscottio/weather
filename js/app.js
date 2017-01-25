@@ -13,7 +13,6 @@ var $windDir = $("#windDir");
 var $humidity = $("#humidity");
 var $cloud = $("#cloud");
 
-
 // VANILLA DOM SELECTORS FOR PROJECT GOALS
 var currentTemp = document.getElementById("currentTemp");
 var feels = document.getElementById("currentFeels");
@@ -21,7 +20,7 @@ var feels = document.getElementById("currentFeels");
 // INITS RETURNED DATA SO IT CAN BE ACCESSED FOR UNIT TOGGLE
 var storedCurrent;
 var storedForecast;
-var storedHistory;
+var storedHistoric;
 var units = "metric";
 
 // INITS FORECAST jQUERY VARIABLES
@@ -33,12 +32,16 @@ var $lows = $(".forecastLow");
 
 // INITS HISTORIC jQUERY VARIABLES
 var $historicDate = $("#historicDate");
-var $historicImg = $("historicImg");
-var $historicHigh = $("historicHigh");
-var $historicLow = $("historicLow");
+var $historicImg = $("#historicImg");
+var $historicHigh = $("#historicHigh");
+var $historicLow = $("#historicLow");
+var $historicTable = $("#historicTable");
+
+var historicPrinted = false;
 
 // INITIAL FORECAST FOR GOTHENBURG
 getWeather("Gothenburg");
+
 
 
 // INITS DATE PICKER
@@ -109,6 +112,12 @@ function updateUnits() {
         $lows.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_c + "&deg");
         });
+
+        if(historicPrinted){
+            $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_c + "&deg");
+            $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_c + "&deg");
+        }
+
     } else {
         currentTemp.innerHTML = storedForecast.current.temp_f + "&deg;";
         feels.innerHTML = storedForecast.current.feelslike_f + "&deg;";
@@ -119,12 +128,20 @@ function updateUnits() {
         $lows.each(function (i) {
             $(this).html(storedForecast.forecast.forecastday[i].day.mintemp_f + "&deg");
         });
-    }
+
+        if(historicPrinted){
+            $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_f + "&deg");
+            $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_f + "&deg");
+        }
+    }   
 }
 
 function getWeather(query) {
     //FADES IN LOADING ICON
     $loading.fadeIn("fast");
+
+    $historicTable.hide();
+    historicPrinted = false;
 
     // SETS QUERY URL FOR CURRENT AND FORECAST QUERIES
     var currentUrl = "https://api.apixu.com/v1/current.json?key=94999ca7d68e4e5a89a195033162111&q=" + query;
@@ -157,14 +174,14 @@ function getWeather(query) {
 
 // HISTORIC REQUEST
 function getHistoric(lat, lon, date){
-    var historyUrl = "https://api.apixu.com/v1/history.json?key=94999ca7d68e4e5a89a195033162111&dt=" + date + "&q=" + lat + "," + lon;
+    var historicUrl = "https://api.apixu.com/v1/history.json?key=94999ca7d68e4e5a89a195033162111&dt=" + date + "&q=" + lat + "," + lon;
     
     $.ajax({
         dataType: "json",
-        url: historyUrl,
+        url: historicUrl,
         success: function (data) {
             $loading.fadeOut("fast");
-            storedHistory = data;
+            storedHistoric = data;
             printHistoric();
         }
     });
@@ -173,21 +190,23 @@ function getHistoric(lat, lon, date){
 function printHistoric(){
 
     //handles case where date returns no weather
-    if (storedHistory.location === undefined){
+    if (storedHistoric.location === undefined){
         alert("Invalid Date");
         return null;
     }
 
+    historicPrinted = true;
+    $historicTable.show();
 
-    $historicDate.text(storedHistory.forecast.forecastday[0].date.substr(5));
+    $historicDate.text(storedHistoric.forecast.forecastday[0].date.substr(5));
     $historicImg.attr('src', "https:" + storedHistoric.forecast.forecastday[0].day.condition.icon);
 
     if(units === "metric"){
-        $historicHigh.html(storedHistory.forecast.forecastday[0].day.maxtemp_c + "&deg");
-        $historicLow.html(storedHistory.forecast.forecastday[0].day.mintemp_c + "&deg");
+        $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_c + "&deg");
+        $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_c + "&deg");
     } else {
-        $historicHigh.html(storedHistory.forecast.forecastday[0].day.maxtemp_f + "&deg");
-        $historicLow.html(storedHistory.forecast.forecastday[0].day.mintemp_f + "&deg");
+        $historicHigh.html(storedHistoric.forecast.forecastday[0].day.maxtemp_f + "&deg");
+        $historicLow.html(storedHistoric.forecast.forecastday[0].day.mintemp_f + "&deg");
     }
 
 }
