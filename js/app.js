@@ -1,4 +1,8 @@
 /*
+    Author: Jason Scott
+    Website: jasonscott.io
+    Email: jason@jasonscott.io
+
   All of these variables are init at the top of the program so that jQuery does not have to find the related DOM elements every time 
   a search is completed. This is done in order to save resources and provide a quicker experience.
 */
