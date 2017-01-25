@@ -32,6 +32,7 @@ Features
 
  - Default API call in case of no user location availability.
  - Geo-location weather search.
+ - Current conditions, a future forecast, and  the previous week's weather data is all available.
  - Search bar for custom API calls.
 	 - Autocomplete functionality using jQuery UI autocomplete.
  - Responsive layout.
